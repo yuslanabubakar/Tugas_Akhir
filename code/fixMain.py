@@ -8,7 +8,6 @@ Created on Wed May 09 11:40:38 2018
 from openpyxl import load_workbook
 import fixFunction as fc
 import time
-from collections import namedtuple
 import numpy as np
 
 start_time = time.time()
@@ -56,34 +55,31 @@ for i in range(len(IGW)):
 for i in range(len(igw)):
     igw[i] = [x[0] for x in igw[i]]
 
-IGW = namedtuple('IGW','anjuran, larangan, informasi')
-IGW(igw[0],igw[1],igw[2])
-
 ##for i in ig:
 ##    igWThreshold.append(i[0])
 ##np.savetxt("igWThreshold.txt", igWThreshold, delimiter=",", fmt="%s")
-#print 'Counting TF...'
-#tfAnjur,tfLarang,tfInfo = fc.tf(igWThresholdAnjur,igWThresholdLarang,igWThresholdInfo,dataAnjur,dataLarang,dataInfo)
-#print 'Counting IDF...'
-#idfAnjur,idfLarang,idfInfo = fc.idf(tfAnjur,tfLarang,tfInfo,dataAnjur,dataLarang,dataInfo)
-#print 'Counting TFxIDF...'
-#tfidfAnjur,tfidfLarang,tfidfInfo = fc.tfIDF(tfAnjur,tfLarang,tfInfo,dataAnjur,dataLarang,dataInfo,idfAnjur,idfLarang,idfInfo)
-##
-##start training ann (artificial neural network)
-#input_p_anjur = len(tfidfAnjur[0][1])
-#input_p_larang = len(tfidfLarang[0][1])
-#input_p_info = len(tfidfInfo[0][1])
-#hidden_p = 10
-#output_p = 1
-#lr = 0.07
-#epoch = 1000
-#mseStandar = 0.001
+print 'Counting TF...'
+TF = fc.tf(igw,data)
+print 'Counting IDF...'
+IDF = fc.idf(TF,data)
+print 'Counting TFxIDF...'
+TFIDF = fc.tfIDF(TF,data,IDF)
+#
+#start training ann (artificial neural network)
+input_p_anjur = len(TFIDF.anjuran[1][1])
+input_p_larang = len(TFIDF.larangan[1][1])
+input_p_info = len(TFIDF.informasi[1][1])
+hidden_p = 10
+output_p = 1
+lr = 0.07
+epoch = 1000
+mseStandar = 0.001
 ##i_param = [input_p,hidden_p,output_p,lr,epoch,mseStandar]
 ##np.savetxt('inputParameters.txt',i_param)
 #print 'Start training data...'
-#W1Anjur,W2Anjur,B1Anjur,B2Anjur = fc.trainingAnjur(input_p_anjur,hidden_p,output_p,lr,epoch,mseStandar,tfidfAnjur)
-#W1Larang,W2Larang,B1Larang,B2Larang = fc.trainingLarang(input_p_larang,hidden_p,output_p,lr,epoch,mseStandar,tfidfLarang)
-#W1Info,W2Info,B1Info,B2Info = fc.trainingInfo(input_p_info,hidden_p,output_p,lr,epoch,mseStandar,tfidfInfo)
+W1Anjur,W2Anjur,B1Anjur,B2Anjur = fc.trainingAnjur(input_p_anjur,hidden_p,output_p,lr,epoch,mseStandar,TFIDF.anjuran)
+W1Larang,W2Larang,B1Larang,B2Larang = fc.trainingLarang(input_p_larang,hidden_p,output_p,lr,epoch,mseStandar,TFIDF.larangan)
+W1Info,W2Info,B1Info,B2Info = fc.trainingInfo(input_p_info,hidden_p,output_p,lr,epoch,mseStandar,TFIDF.informasi)
 #print 'Finish'
 ##start testing
 #print 'Now is testing the data...'

@@ -146,19 +146,19 @@ def plotIGW(igW):
     
     plt.show()
     
-def tf(IGW,data):
+def tf(igw,data):
     Data = namedtuple('Data','anjuran, larangan, informasi')
     TF = []
-    for i in range(len(IGW)):
+    for i in range(len(igw)):
         tf = []
-        for word in IGW[i]:
+        for word in igw[i]:
             hasil = []
             l = []
             doc = 1
             for j in data[i]:
                 d = []
                 words = []
-                for x in j.lowe().split():
+                for x in j.lower().split():
                     x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
 #                    x = stemmer.stem(x.encode('utf-8')) #stemming
                     words.append(x.encode('utf-8'))
@@ -174,134 +174,60 @@ def tf(IGW,data):
         
     return Data(TF[0],TF[1],TF[2])
 
-def idf(tfAnjur,tfLarang,tfInfo,dataAnjur,dataLarang,dataInfo):
-    idfAnjur = []
-    idfLarang = []
-    idfInfo = []
-    for i in tfAnjur:
-        data = []
-        counts = 0
-        for j in i[1]:
-            if j[1] > 0:
-                counts = counts + 1
-        counts = math.log((len(dataAnjur)+len(tfAnjur))/float(counts+1)) #smoothing
-        data.append(i[0])
-        data.append(counts)
-        idfAnjur.append(data)
-        
-    for i in tfLarang:
-        data = []
-        counts = 0
-        for j in i[1]:
-            if j[1] > 0:
-                counts = counts + 1
-        counts = math.log((len(dataLarang)+len(tfLarang))/float(counts+1)) #smoothing
-        data.append(i[0])
-        data.append(counts)
-        idfLarang.append(data)
-        
-    for i in tfInfo:
-        data = []
-        counts = 0
-        for j in i[1]:
-            if j[1] > 0:
-                counts = counts + 1
-        counts = math.log((len(dataInfo)+len(tfInfo))/float(counts+1)) #smoothing
-        data.append(i[0])
-        data.append(counts)
-        idfInfo.append(data)
-    print 'Finish'
-    return idfAnjur,idfLarang,idfInfo
+def idf(TF,data):
+    Data = namedtuple('Data','anjuran, larangan, informasi')
+    IDF = []
+    for i in range(len(data)):
+        idf = []
+        for j in TF[i]:
+            d = []
+            counts = 0
+            for k in j[1]:
+                if k[1] > 0:
+                    counts = counts + 1
+            counts = math.log((len(data[i])+len(TF[i]))/float(counts+1)) #smoothing
+            d.append(j[0])
+            d.append(counts)
+            idf.append(d)
+        IDF.append(idf)
+    
+    return Data(IDF[0],IDF[1],IDF[2])
 
-def tfIDF(tfAnjur,tfLarang,tfInfo,dataAnjur,dataLarang,dataInfo,idfAnjur,idfLarang,idfInfo):
-    result = []
-    for i in range(len(tfAnjur)):
-        tidfAnjur = 0
-        d = []
-        l = []
-        for j in tfAnjur[i][1]:
-            data = []
-            tidfAnjur = j[1] * idfAnjur[i][1]
-            data.append(j[0])
-            data.append(tidfAnjur)
-            d.append(data)
-        l.append(tfAnjur[i][0])
-        l.append(d)
-        result.append(l)
-    tfidfAnjur = []
-    for i in range(len(dataAnjur)):
-        d = []
-        l = []
-        for j in result:
-            data = []
-            for k in j[1]:
-                if i+1 == k[0]:
-                    data.append(j[0])
-                    data.append(k[1])
-            d.append(data)
-        l.append(i+1)
-        l.append(d)
-        tfidfAnjur.append(l)
-        
-    result = []
-    for i in range(len(tfLarang)):
-        tidfLarang = 0
-        d = []
-        l = []
-        for j in tfLarang[i][1]:
-            data = []
-            tidfLarang= j[1] * idfLarang[i][1]
-            data.append(j[0])
-            data.append(tidfLarang)
-            d.append(data)
-        l.append(tfLarang[i][0])
-        l.append(d)
-        result.append(l)
-    tfidfLarang= []
-    for i in range(len(dataLarang)):
-        d = []
-        l = []
-        for j in result:
-            data = []
-            for k in j[1]:
-                if i+1 == k[0]:
-                    data.append(j[0])
-                    data.append(k[1])
-            d.append(data)
-        l.append(i+1)
-        l.append(d)
-        tfidfLarang.append(l)
-        
-    result = []
-    for i in range(len(tfInfo)):
-        tidfInfo = 0
-        d = []
-        l = []
-        for j in tfInfo[i][1]:
-            data = []
-            tidfInfo = j[1] * idfInfo[i][1]
-            data.append(j[0])
-            data.append(tidfInfo)
-            d.append(data)
-        l.append(tfInfo[i][0])
-        l.append(d)
-        result.append(l)
-    tfidfInfo = []
-    for i in range(len(dataInfo)):
-        d = []
-        l = []
-        for j in result:
-            data = []
-            for k in j[1]:
-                if i+1 == k[0]:
-                    data.append(j[0])
-                    data.append(k[1])
-            d.append(data)
-        l.append(i+1)
-        l.append(d)
-        tfidfInfo.append(l)
-    print 'Finish'
-    return tfidfAnjur,tfidfLarang,tfidfInfo
+def tfIDF(TF,data,IDF):
+    Data = namedtuple('Data','anjuran, larangan, informasi')
+    TFIDF = []
+    for i in range(len(TF)):
+        result = []
+        for j in range(len(TF[i])):
+            tfidf = 0
+            d = []
+            l = []
+            for k in TF[i][j][1]:
+                dt = []
+                tfidf = k[1] * IDF[i][j][1]
+                dt.append(k[0])
+                dt.append(tfidf)
+                d.append(dt)
+            l.append(TF[i][j][0])
+            l.append(d)
+            result.append(l)
+        tfidf = []
+        for j in range(len(data[i])):
+            d = []
+            li = []
+            for k in result:
+                dt = []
+                for l in k[1]:
+                    if j+1 == l[0]:
+                        dt.append(k[0])
+                        dt.append(l[1])
+                d.append(dt)
+            li.append(j+1)
+            li.append(d)
+            tfidf.append(li)
+        TFIDF.append(tfidf)
+    
+    return Data(TFIDF[0],TFIDF[1],TFIDF[2])
 
 def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfAnjur):
     X = []
