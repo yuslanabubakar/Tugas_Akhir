@@ -11,89 +11,91 @@ import time
 import numpy as np
 
 start_time = time.time()
-#matriksTarget = [[1,0,0,0,0,0,0],
-#                 [0,1,0,0,0,0,0],
-#                 [0,0,1,0,0,0,0],
-#                 [0,0,0,1,0,0,0],
-#                 [0,0,0,0,1,0,0],
-#                 [0,0,0,0,0,1,0],
-#                 [0,0,0,0,0,0,1]]
-#matriksTarget = [[0,0,1],
-#                 [0,1,0],
-#                 [0,1,1],
-#                 [1,0,0],
-#                 [1,0,1],
-#                 [1,1,0],
-#                 [1,1,1]]
-#np.savetxt('matriksTarget.txt',matriksTarget)
+label = ['anjuran','larangan','informasi']
 print 'Open File...'
-wb = load_workbook('data1.xlsx')
+wb = load_workbook('dataMulti.xlsx')
 sheet = wb.active
-data = fc.getData(sheet)
-print 'Now Start Remove Stopwords...'
-preprocessing = fc.preprocessing(data)
-##print 'Counting document for each class...'
-##docEachClass = fc.docEachClass(dataAnjur,dataLarang,dataInfo)
-print 'Counting document for each class given word...'
-FW = fc.docGivenWord(data,preprocessing)
-print 'Counting Probability for Each Class Given Word w...'
-PIW = fc.probEachClassGivenWord(FW,data)
-print 'Counting Information Gain for Each Class and Word...'
-IGW = fc.informationGain(PIW)
-#
-#get words if igW value > threshold
-#igwAnjur = [x for x in igAnjur if x[1] >= 0.05]
-#igwLarang = [x for x in igLarang if x[1] >= 0.05]
-#igwInfo = [x for x in igInfo if x[1] >= 0.05]
-#igWThresholdAnjur = [x[0] for x in igwAnjur]
-#igWThresholdLarang = [x[0] for x in igwLarang]
-#igWThresholdInfo = [x[0] for x in igwInfo]
-igw = []
-for i in range(len(IGW)):
-    igw.append([x for x in IGW[i] if x[1] >= 0.05])
+dataSet = fc.getData(sheet)
+
+hammingLoss = []
+num_folds = 5
+subset_size = len(dataSet) / num_folds
+for i in range(num_folds): #K-Cross Validation
+    print 'K-Cross = ',(i+1)
+    testing = dataSet[i*subset_size:][:subset_size]
+    training = dataSet[:i*subset_size]+dataSet[(i+1)*subset_size:]
+    print 'Now Start Remove Stopwords...'
+    preprocessing = fc.preprocessing(training)
+    print 'Counting document for each class...'
+    docEachClass = fc.docEachClass(label,training)
+    print 'Counting document for each class given word...'
+    FW = fc.docGivenWord(training,preprocessing,label)
+    print 'Counting Probability for Each Class Given Word w...'
+    PIW = fc.probEachClassGivenWord(FW, label, docEachClass)
+    print 'Counting Information Gain for Each Class and Word...'
+    IGW = fc.informationGain(PIW,label)
     
-for i in range(len(igw)):
-    igw[i] = [x[0] for x in igw[i]]
+    ##plot feature for each label
+    #fc.plotIGW(IGW[0]) #anjuran
+    #fc.plotIGW(IGW[1]) #larangan
+    #fc.plotIGW(IGW[2]) #informasi
+    
+    #get threshold for each IGW
+    value = 0.85
+    IGW = fc.thresholdIGW(IGW,value)
+    
+    ##for i in ig:
+    ##    igWThreshold.append(i[0])
+    ##np.savetxt("igWThreshold.txt", igWThreshold, delimiter=",", fmt="%s")
+    print 'Counting TF...'
+    TF = fc.tf(IGW,training)
+    print 'Counting IDF...'
+    IDF = fc.idf(TF,training)
+    print 'Counting TFxIDF...'
+    TFIDF = fc.tfIDF(TF,training,IDF)
+    
+    print '================================================'
+    
+    #start training ann (artificial neural network)
+    input_p_anjur = len(TFIDF[0][0][1])
+    input_p_larang = len(TFIDF[1][0][1])
+    input_p_info = len(TFIDF[2][0][1])
+    hidden_p = 10
+    output_p = 1
+    lr = 0.08
+    epoch = 1000
+    mseStandar = 0.01
+    ##i_param = [input_p,hidden_p,output_p,lr,epoch,mseStandar]
+    ##np.savetxt('inputParameters.txt',i_param)
+    print 'Start training data...'
+    W1Anjur,W2Anjur,B1Anjur,B2Anjur = fc.trainingAnjur(input_p_anjur,hidden_p,output_p,lr,epoch,mseStandar,TFIDF[0],training)
+    W1Larang,W2Larang,B1Larang,B2Larang = fc.trainingLarang(input_p_larang,hidden_p,output_p,lr,epoch,mseStandar,TFIDF[1],training)
+    W1Info,W2Info,B1Info,B2Info = fc.trainingInfo(input_p_info,hidden_p,output_p,lr,epoch,mseStandar,TFIDF[2],training)
+    print 'Finish'
+    
+    print '================================================'
+    
+    #start testing
+    print 'Now is testing the data...'
+#    wbTest = load_workbook('dataTest.xlsx')
+#    sheetTest = wbTest.active
+#    dataSetTest = fc.getData(sheetTest)
+    print 'Counting TF...'
+    tfTest = fc.tf(IGW,testing)
+    print 'Counting IDF...'
+    idfTest = fc.idf(tfTest,testing)
+    print 'Counting TFxIDF...'
+    tfIDFTest = fc.tfIDF(tfTest,testing,idfTest)
+    labelAnjur = fc.testing(tfIDFTest[0],W1Anjur,W2Anjur,B1Anjur,B2Anjur)
+    labelLarang = fc.testing(tfIDFTest[1],W1Larang,W2Larang,B1Larang,B2Larang)
+    labelInfo = fc.testing(tfIDFTest[2],W1Info,W2Info,B1Info,B2Info)
+    print 'Count hamming loss...'
+    hLoss = fc.hammingLoss(labelAnjur,labelLarang,labelInfo,testing)
+    hammingLoss.append(hLoss)
+    print 'Hamming Loss = ', hLoss
+    print
+    print '================================================'
+    print
 
-##for i in ig:
-##    igWThreshold.append(i[0])
-##np.savetxt("igWThreshold.txt", igWThreshold, delimiter=",", fmt="%s")
-print 'Counting TF...'
-TF = fc.tf(igw,data)
-print 'Counting IDF...'
-IDF = fc.idf(TF,data)
-print 'Counting TFxIDF...'
-TFIDF = fc.tfIDF(TF,data,IDF)
-#
-#start training ann (artificial neural network)
-input_p_anjur = len(TFIDF.anjuran[1][1])
-input_p_larang = len(TFIDF.larangan[1][1])
-input_p_info = len(TFIDF.informasi[1][1])
-hidden_p = 10
-output_p = 1
-lr = 0.07
-epoch = 1000
-mseStandar = 0.001
-##i_param = [input_p,hidden_p,output_p,lr,epoch,mseStandar]
-##np.savetxt('inputParameters.txt',i_param)
-#print 'Start training data...'
-W1Anjur,W2Anjur,B1Anjur,B2Anjur = fc.trainingAnjur(input_p_anjur,hidden_p,output_p,lr,epoch,mseStandar,TFIDF.anjuran)
-W1Larang,W2Larang,B1Larang,B2Larang = fc.trainingLarang(input_p_larang,hidden_p,output_p,lr,epoch,mseStandar,TFIDF.larangan)
-W1Info,W2Info,B1Info,B2Info = fc.trainingInfo(input_p_info,hidden_p,output_p,lr,epoch,mseStandar,TFIDF.informasi)
-#print 'Finish'
-##start testing
-#print 'Now is testing the data...'
-#wbTest = load_workbook('data.xlsx')
-#sheetTest = wbTest.active
-#dataSetTest = fc.getData(sheetTest)
-#print 'Counting TF...'
-#tfTest = fc.tf(igWThreshold,dataSetTest)
-#print 'Counting IDF...'
-#idfTest = fc.idf(tfTest,dataSetTest)
-#print 'Counting TFxIDF...'
-#tfIDFTest = fc.tfIDF(tfTest,idfTest,dataSetTest)
-#label = fc.testing(tfIDFTest,W1,W2,B1,B2)
-#hLoss = fc.hammingLoss(label,dataSetTest)
-#print 'Hamming Loss = ', hLoss
-
+print 'Mean hLoss = ' , np.mean(hammingLoss)
 print time.time() - start_time , ' seconds'

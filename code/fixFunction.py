@@ -12,123 +12,133 @@ import matplotlib.pyplot as plt; plt.rcdefaults()
 import matplotlib.pyplot as plt
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from collections import namedtuple
+from operator import itemgetter
 
 # create stemmer
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
 
 def getData(sheet):
-    Data = namedtuple('Data','anjuran, larangan, informasi')
-    dataInfo = []
-    dataAnjur = []
-    dataLarang = []
+    dataSet = []
     for i in range(1, sheet.max_row+1):
-        if (int(sheet.cell(row=i, column=2).value)) == 1:
-            dataAnjur.append(sheet.cell(row=i, column=1).value)
-        if (int(sheet.cell(row=i, column=3).value)) == 1:
-            dataLarang.append(sheet.cell(row=i, column=1).value)
-        if (int(sheet.cell(row=i, column=4).value)) == 1:
-            dataInfo.append(sheet.cell(row=i, column=1).value)
+        dataText = []
+        label = []
+        data = []
+        dataText.append(sheet.cell(row=i, column=1).value)
+        label.append(int(sheet.cell(row=i, column=2).value))
+        label.append(int(sheet.cell(row=i, column=3).value))
+        label.append(int(sheet.cell(row=i, column=4).value))
+        data.append(dataText)
+        data.append(label)
+        dataSet.append(data)
 
-    return Data(dataAnjur,dataLarang,dataInfo)
+    return dataSet
 
-def preprocessing(data):
-    Data = namedtuple('Data','anjuran,larangan,informasi')
+def preprocessing(dataSet):
+    data = []
+    for i in dataSet:
+        data.append(i[0])
     f = open('stopwords.txt','r')
     stopwords = f.read()
 
     def stop_words(data):
         textStop = []
         for i in data:
-            for x in i.lower().split():
+            for x in i[0].lower().split():
                 x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
 #                x = stemmer.stem(x.encode('utf-8')) #stemming
                 if x.encode('utf-8') not in stopwords:
                     textStop.append(x.encode('utf-8'))
         return textStop
 
-    anjur = np.unique(stop_words(data.anjuran))
-    larang = np.unique(stop_words(data.larangan))
-    info = np.unique(stop_words(data.informasi))
-#    thefile = open('dataStop.txt','w')
-#    for item in dataStop:
-#        print>>thefile, item
-#    print 'Preprocessing file saved'
-    return Data(anjur,larang,info)  
+    dataStop  = stop_words(data)
+    dataStop = np.unique(dataStop)
+    thefile = open('dataStop.txt','w')
+    for item in dataStop:
+        print>>thefile, item
+    print 'Preprocessing file saved'
+    return dataStop  
 
-def docEachClass(dataAnjur,dataLarang,dataInfo):
+def docEachClass(label,dataSet):
     data = []
-    d = []
-    d.append('anjuran')
-    d.append(len(dataAnjur))
-    data.append(d)
-    d = []
-    d.append('larangan')
-    d.append(len(dataLarang))
-    data.append(d)
-    d = []
-    d.append('informasi')
-    d.append(len(dataInfo))
-    data.append(d)
+    thefile = open('docEachClass.txt','w')
+    for i in range(len(label)):
+        d = []
+        count = 0
+        for x in dataSet:
+            if x[1][i] == 1:
+                count = count + 1
+        d.append(label[i])
+        d.append(count)
+        data.append(d)
+        print>>thefile, d
     
-    print 'Finish'
     return data
 
-def docGivenWord(data,preprocessing):
-    Data = namedtuple('Data','anjuran, larangan, informasi')
-    FW = []
-    for i in range(len(data)):
-        fw = []
-        for j in preprocessing[i]:
-            d = []
-            countDoc = 0
-            for k in data[i]:
-                c = 0
-                words = []
-                for word in k.lower().split():
-                    word = re.sub('[(;:,.\'`?!0123456789)]', '', word)
-#                    word = stemmer.stem(word.encode('utf-8')) #stemming
-                    words.append(word.encode('utf-8'))
-                c = list(words).count(j)
-                if c > 0:
-                    countDoc = countDoc + 1
-            d.append(j)
-            d.append(countDoc)
-            fw.append(d)
-        FW.append(fw)
-        
-    return Data(FW[0],FW[1],FW[2])
-
-def probEachClassGivenWord(FW, data):
-    Data = namedtuple('Data','anjuran, larangan, informasi')
-    PIW = []
-    for i in range(len(data)):
-        piw = []
-        for j in FW[i]:
-            a = []
-            p = (j[1]) / float(len(data[i]))
-            a.append(j[0])
-            a.append(p)
-            piw.append(a)
-        PIW.append(piw)
-        
-    return Data(PIW[0],PIW[1],PIW[2])
-
-def informationGain(PIW):
-    Data = namedtuple('Data','anjuran, larangan, informasi')
-    IGW = []
-    for i in range(len(PIW)):
-        ig = []
-        for j in PIW[i]:
-            nilai = 0
+def docGivenWord(dataSet,preprocessing,label):
+    result = []
+    for i in preprocessing:
+        for j in range(len(label)):
             data = []
-            nilai = (-(j[1] * math.log(j[1],2)))
-            data.append(j[0])
-            data.append(nilai)
-            ig.append(data)
-        IGW.append(ig)
+            countDoc = 0
+            for k in dataSet:
+                if k[1][j] == 1:
+                    c = 0
+                    words = []
+                    for word in k[0][0].lower().split():
+                        word = re.sub('[(;:,.\'`?!0123456789)]', '', word)
+#                        word = stemmer.stem(word.encode('utf-8')) #stemming
+                        words.append(word.encode('utf-8'))
+                    c = list(words).count(i)
+                    if c > 0:
+                        countDoc = countDoc + 1
+            data.append(i)
+            data.append(label[j])
+            data.append(countDoc)
+            result.append(data)
     
-    return Data(IGW[0],IGW[1],IGW[2])
+    thefile = open('Fw.txt','w')
+    for item in result:
+        print>>thefile, item
+        
+    return result
+
+def probEachClassGivenWord(FW, label, docEachClass):
+    result = []
+    for i in FW:
+        for j in range(len(label)):
+            a = []
+            if i[1] == label[j]:
+                piW = (i[2]+1) / float(docEachClass[j][1]+1) #smoothing
+                a.append(i[0])
+                a.append(i[1])
+                a.append(piW)
+                result.append(a)
+                
+    return result
+
+def informationGain(PIW,label):
+    result = []
+    thefile = open('informationGain.txt','w')
+    for i in PIW:
+        data = []
+        nilai = -(i[2] * math.log(i[2],2))
+        nilai = 1 - nilai
+        data.append(i[0])
+        data.append(i[1])
+        data.append(nilai)
+        result.append(data)
+        print>>thefile,data
+    
+    IGW = []
+    for i in range(len(label)):
+        igw = []
+        for j in result:
+            if j[1] == label[i]:
+                data = itemgetter(*[0,2])(j)
+                igw.append(data)
+        IGW.append(igw)
+    return IGW
 
 def plotIGW(igW):
     x = []
@@ -145,20 +155,28 @@ def plotIGW(igW):
     plt.title('Information Gain')
     
     plt.show()
+
+def thresholdIGW(IGW,value):
+    result = []
+    for i in range(len(IGW)):
+        result.append([x[0] for x in IGW[i] if x[1] >= value])
+    return result
     
-def tf(igw,data):
-    Data = namedtuple('Data','anjuran, larangan, informasi')
+def tf(IGW,dataSet):
+    document = []
+    for i in dataSet:
+        document.append(i[0])
     TF = []
-    for i in range(len(igw)):
+    for i in range(len(IGW)):
         tf = []
-        for word in igw[i]:
+        for word in IGW[i]:
             hasil = []
             l = []
             doc = 1
-            for j in data[i]:
+            for j in document:
                 d = []
                 words = []
-                for x in j.lower().split():
+                for x in j[0].lower().split():
                     x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
 #                    x = stemmer.stem(x.encode('utf-8')) #stemming
                     words.append(x.encode('utf-8'))
@@ -172,12 +190,11 @@ def tf(igw,data):
             tf.append(l)
         TF.append(tf)
         
-    return Data(TF[0],TF[1],TF[2])
+    return TF
 
-def idf(TF,data):
-    Data = namedtuple('Data','anjuran, larangan, informasi')
+def idf(TF,dataSet):
     IDF = []
-    for i in range(len(data)):
+    for i in range(len(TF)):
         idf = []
         for j in TF[i]:
             d = []
@@ -185,16 +202,15 @@ def idf(TF,data):
             for k in j[1]:
                 if k[1] > 0:
                     counts = counts + 1
-            counts = math.log((len(data[i])+len(TF[i]))/float(counts+1)) #smoothing
+            counts = math.log((len(dataSet)+len(TF[i]))/float(counts+1)) #smoothing
             d.append(j[0])
             d.append(counts)
             idf.append(d)
         IDF.append(idf)
     
-    return Data(IDF[0],IDF[1],IDF[2])
+    return IDF
 
-def tfIDF(TF,data,IDF):
-    Data = namedtuple('Data','anjuran, larangan, informasi')
+def tfIDF(TF,dataSet,IDF):
     TFIDF = []
     for i in range(len(TF)):
         result = []
@@ -212,7 +228,7 @@ def tfIDF(TF,data,IDF):
             l.append(d)
             result.append(l)
         tfidf = []
-        for j in range(len(data[i])):
+        for j in range(len(dataSet)):
             d = []
             li = []
             for k in result:
@@ -227,11 +243,11 @@ def tfIDF(TF,data,IDF):
             tfidf.append(li)
         TFIDF.append(tfidf)
     
-    return Data(TFIDF[0],TFIDF[1],TFIDF[2])
+    return TFIDF
 
-def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfAnjur):
+def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tdidf,dataSet):
     X = []
-    for i in tfidfAnjur:
+    for i in tdidf:
         data = []
         for j in i[1]:
             data.append(j[1])
@@ -239,12 +255,16 @@ def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfAnjur):
     
     #start training
     mse = 999999999
-    iterate = 1
-    B1Anjur = np.matrix(np.random.rand(hidden_p))
-    B2Anjur = np.matrix(np.random.rand(output_p))
-    W1Anjur = np.random.rand(input_p,hidden_p)
-    W2Anjur = np.random.rand(hidden_p,output_p)
-    while (mse > mseStandar and iterate <= epoch):
+    iterate = 0
+    np.random.seed(1)
+    B1Anjur = np.matrix(np.random.uniform(0,1,hidden_p))
+    np.random.seed(1)
+    B2Anjur = np.matrix(np.random.uniform(0,1,output_p))
+    np.random.seed(1)
+    W1Anjur = np.random.uniform(0,1,(input_p,hidden_p))
+    np.random.seed(1)
+    W2Anjur = np.random.uniform(0,1,(hidden_p,output_p))
+    while (mse > mseStandar and iterate < epoch):
         error = []
         mse = 0
         for i in range(len(X)):
@@ -256,7 +276,7 @@ def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfAnjur):
             V2 = np.dot(A1,W2Anjur)
             V2 = V2 + B2Anjur
             A2 = 1 / (1 + np.exp(-0.1 * V2))
-            e = (1 - A2) #targetnya selalu 1
+            e = (dataSet[i][1][0] - A2)
             error.append(e)
             
             #backpropagation
@@ -285,9 +305,9 @@ def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfAnjur):
 #    np.savetxt('B2.txt',B2)
     return W1Anjur,W2Anjur,B1Anjur,B2Anjur
     
-def trainingLarang(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfLarang):
+def trainingLarang(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidf,dataSet):
     X = []
-    for i in tfidfLarang:
+    for i in tfidf:
         data = []
         for j in i[1]:
             data.append(j[1])
@@ -295,12 +315,16 @@ def trainingLarang(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfLarang):
     
     #start training
     mse = 999999999
-    iterate = 1
-    B1Larang= np.matrix(np.random.rand(hidden_p))
-    B2Larang = np.matrix(np.random.rand(output_p))
-    W1Larang = np.random.rand(input_p,hidden_p)
-    W2Larang = np.random.rand(hidden_p,output_p)
-    while (mse > mseStandar and iterate <= epoch):
+    iterate = 0
+    np.random.seed(1)
+    B1Larang = np.matrix(np.random.uniform(0,1,hidden_p))
+    np.random.seed(1)
+    B2Larang = np.matrix(np.random.uniform(0,1,output_p))
+    np.random.seed(1)
+    W1Larang = np.random.uniform(0,1,(input_p,hidden_p))
+    np.random.seed(1)
+    W2Larang = np.random.uniform(0,1,(hidden_p,output_p))
+    while (mse > mseStandar and iterate < epoch):
         error = []
         mse = 0
         for i in range(len(X)):
@@ -312,7 +336,7 @@ def trainingLarang(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfLarang):
             V2 = np.dot(A1,W2Larang)
             V2 = V2 + B2Larang
             A2 = 1 / (1 + np.exp(-0.1 * V2))
-            e = (1 - A2) #targetnya selalu 1
+            e = (dataSet[i][1][1] - A2)
             error.append(e)
             
             #backpropagation
@@ -341,9 +365,9 @@ def trainingLarang(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfLarang):
 #    np.savetxt('B2.txt',B2)
     return W1Larang,W2Larang,B1Larang,B2Larang
 
-def trainingInfo(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfInfo):
+def trainingInfo(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidf,dataSet):
     X = []
-    for i in tfidfInfo:
+    for i in tfidf:
         data = []
         for j in i[1]:
             data.append(j[1])
@@ -351,12 +375,16 @@ def trainingInfo(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfInfo):
     
     #start training
     mse = 999999999
-    iterate = 1
-    B1Info= np.matrix(np.random.rand(hidden_p))
-    B2Info = np.matrix(np.random.rand(output_p))
-    W1Info = np.random.rand(input_p,hidden_p)
-    W2Info = np.random.rand(hidden_p,output_p)
-    while (mse > mseStandar and iterate <= epoch):
+    iterate = 0
+    np.random.seed(1)
+    B1Info = np.matrix(np.random.uniform(0,1,hidden_p))
+    np.random.seed(1)
+    B2Info = np.matrix(np.random.uniform(0,1,output_p))
+    np.random.seed(1)
+    W1Info = np.random.uniform(0,1,(input_p,hidden_p))
+    np.random.seed(1)
+    W2Info = np.random.uniform(0,1,(hidden_p,output_p))
+    while (mse > mseStandar and iterate < epoch):
         error = []
         mse = 0
         for i in range(len(X)):
@@ -368,7 +396,7 @@ def trainingInfo(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidfInfo):
             V2 = np.dot(A1,W2Info)
             V2 = V2 + B2Info
             A2 = 1 / (1 + np.exp(-0.1 * V2))
-            e = (1 - A2) #targetnya selalu 1
+            e = (dataSet[i][1][2] - A2)
             error.append(e)
             
             #backpropagation
@@ -410,41 +438,35 @@ def testing(tfIDFTest,W1,W2,B1,B2):
     label = []
     for i in range(len(X)):
         #feedforward
-        data = []
+#        data = []
         p = np.matrix(X[i])
 #        for j in range(len(p)):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
         V1 = np.dot(p,W1)
         V1 = V1 + B1
-        A1 = 1 / (1 + np.exp(-1*V1))
+        A1 = 1 / (1 + np.exp(-0.1*V1))
         V2 = np.dot(A1,W2)
         V2 = V2 + B2
-        A2 = 1 / (1 + np.exp(-1 * V2))
-        for e in A2:
-            for j in range(e.shape[1]):
-                if e.item(j) >= 0.5:
-                    data.append(1)
-                else:
-                    data.append(0)
-        label.append(data)
+        A2 = 1 / (1 + np.exp(-0.1 * V2))
+        if A2 >= 0.5:
+            label.append(1)
+        else:
+            label.append(0)
     print 'Finish'
     return label
         
-def hammingLoss(label,dataSet):
-    print 'Count hamming loss...'
+def hammingLoss(labelAnjur,labelLarang,labelInfo,dataSetTest):
     target = []
-    for i in dataSet:
+    for i in dataSetTest:
         target.append(i[1])
     
     errorH = 0
-    for i in range(len(target)):
-        e = np.array(label[i]) - np.array(target[i])
-        for err in e:
-            errorH += err**2
+    for i in range(len(labelAnjur)):
+        if (labelAnjur[i] != target[i][0]) or (labelLarang[i] != target[i][1]) or (labelInfo[i] != target[i][2]):
+            errorH += 1
     
     labelClass = len([list(x) for x in set(tuple(x) for x in target)])
-    hLoss = (1/float(labelClass)) * (1/float(len(dataSet))) * errorH
-    print 'Finish'
+    hLoss = (1/float(labelClass)) * (1/float(len(dataSetTest))) * errorH
     return hLoss
 
 def getWeights():
