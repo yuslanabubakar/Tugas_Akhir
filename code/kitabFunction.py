@@ -257,10 +257,10 @@ def training(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidf,dataSet):
             p = np.matrix(X[i])
             V1 = np.dot(p,W1)
             V1 = V1 + B1
-            A1 = 1 / (1 + np.exp(-0.1*V1))
+            A1 = 1 / (1 + np.exp(-1*V1))
             V2 = np.dot(A1,W2)
             V2 = V2 + B2
-            A2 = 1 / (1 + np.exp(-0.1 * V2)) #sigmoid
+            A2 = 1 / (1 + np.exp(-1 * V2)) #sigmoid
 #            softmax = lambda x : np.exp(x)/np.sum(np.exp(x))
 #            A2 = softmax(V2)
 #            result = np.matrix.tolist(A2)
@@ -319,10 +319,10 @@ def testing(tfIDFTest,W1,W2,B1,B2):
         p = np.matrix(X[i])
         V1 = np.dot(p,W1)
         V1 = V1 + B1
-        A1 = 1 / (1 + np.exp(-0.1*V1))
+        A1 = 1 / (1 + np.exp(-1*V1))
         V2 = np.dot(A1,W2)
         V2 = V2 + B2
-        A2 = 1 / (1 + np.exp(-0.1 * V2)) #sigmoid
+        A2 = 1 / (1 + np.exp(-1 * V2)) #sigmoid
         A2 = np.matrix.tolist(A2)
         maxi = max(A2[0])
         for r in A2[0]:
