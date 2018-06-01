@@ -41,14 +41,14 @@ for i in range(num_folds): #K-Cross Validation
     #fc.plotIGW(IGW[2]) #informasi
     
     #get threshold for each IGW
-    value = 0.01
-    IGW = fc.thresholdIGW(IGW,value)
+    value = 0.60
+    igw = fc.thresholdIGW(IGW,value)
     
     ##for i in ig:
     ##    igWThreshold.append(i[0])
     ##np.savetxt("igWThreshold.txt", igWThreshold, delimiter=",", fmt="%s")
     print 'Counting TF...'
-    TF = fc.tf(IGW,training)
+    TF = fc.tf(igw,training)
     print 'Counting IDF...'
     IDF = fc.idf(TF,training)
     print 'Counting TFxIDF...'
@@ -81,7 +81,7 @@ for i in range(num_folds): #K-Cross Validation
 #    sheetTest = wbTest.active
 #    dataSetTest = fc.getData(sheetTest)
     print 'Counting TF...'
-    tfTest = fc.tf(IGW,testing)
+    tfTest = fc.tf(igw,testing)
     print 'Counting IDF...'
     idfTest = fc.idf(tfTest,testing)
     print 'Counting TFxIDF...'

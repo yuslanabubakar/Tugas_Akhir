@@ -45,13 +45,13 @@ for i in range(num_folds): #K-Cross Validation
     #
     #get threshold for each IGW
     value = 0.60
-    IGW = fc.thresholdIGW(IGW,value)
+    igw = fc.thresholdIGW(IGW,value)
     #
     ###for i in ig:
     ###    igWThreshold.append(i[0])
     ###np.savetxt("igWThreshold.txt", igWThreshold, delimiter=",", fmt="%s")
     print 'Counting TF...'
-    TF = fc.tf(IGW,training)
+    TF = fc.tf(igw,training)
     print 'Counting IDF...'
     IDF = fc.idf(TF,training)
     print 'Counting TFxIDF...'
@@ -80,14 +80,15 @@ for i in range(num_folds): #K-Cross Validation
 #    sheetTest = wbTest.active
 #    dataSetTest = fc.getData(sheetTest)
     print 'Counting TF...'
-    tfTest = fc.tf(IGW,testing)
+    tfTest = fc.tf(igw,testing)
     print 'Counting IDF...'
     idfTest = fc.idf(tfTest,testing)
     print 'Counting TFxIDF...'
     tfIDFTest = fc.tfIDF(tfTest,testing,idfTest)
     label = fc.testing(tfIDFTest,W1,W2,B1,B2)
     print 'Count accuracy...'
-    akurasi = fc.akurasi(label,testing)
+#    akurasi = fc.akurasi(label,testing) #akurasi biasa
+    akurasi = fc.f1_score(matriksTarget,label,testing) #f1-score
     accuracy.append(akurasi)
     print 'Akurasi = ' , akurasi , '%'
     print

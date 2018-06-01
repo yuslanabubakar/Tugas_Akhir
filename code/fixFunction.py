@@ -46,7 +46,7 @@ def preprocessing(dataSet):
         for i in data:
             for x in i[0].lower().split():
                 x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
-#                x = stemmer.stem(x.encode('utf-8')) #stemming
+                x = stemmer.stem(x.encode('utf-8')) #stemming
                 if x.encode('utf-8') not in stopwords:
                     textStop.append(x.encode('utf-8'))
         return textStop
@@ -87,7 +87,7 @@ def docGivenWord(dataSet,preprocessing,label):
                     words = []
                     for word in k[0][0].lower().split():
                         word = re.sub('[(;:,.\'`?!0123456789)]', '', word)
-#                        word = stemmer.stem(word.encode('utf-8')) #stemming
+                        word = stemmer.stem(word.encode('utf-8')) #stemming
                         words.append(word.encode('utf-8'))
                     c = list(words).count(i)
                     if c > 0:
@@ -178,7 +178,7 @@ def tf(IGW,dataSet):
                 words = []
                 for x in j[0].lower().split():
                     x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
-#                    x = stemmer.stem(x.encode('utf-8')) #stemming
+                    x = stemmer.stem(x.encode('utf-8')) #stemming
                     words.append(x.encode('utf-8'))
                 c = list(words).count(word)
                 d.append(doc)
@@ -499,7 +499,7 @@ def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
         words = []
         for x in test[0].lower().split():
             x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
-#                x = stemmer.stem(x.encode('utf-8')) #stemming
+            x = stemmer.stem(x.encode('utf-8')) #stemming
             words.append(x.encode('utf-8'))
         c = list(words).count(word)
         l.append(word)

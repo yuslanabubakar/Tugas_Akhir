@@ -257,10 +257,10 @@ def training(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidf,dataSet):
             p = np.matrix(X[i])
             V1 = np.dot(p,W1)
             V1 = V1 + B1
-            A1 = 1 / (1 + np.exp(-1*V1))
+            A1 = 1 / (1 + np.exp(-0.01*V1))
             V2 = np.dot(A1,W2)
             V2 = V2 + B2
-            A2 = 1 / (1 + np.exp(-1 * V2)) #sigmoid
+            A2 = 1 / (1 + np.exp(-0.01 * V2)) #sigmoid
 #            softmax = lambda x : np.exp(x)/np.sum(np.exp(x))
 #            A2 = softmax(V2)
 #            result = np.matrix.tolist(A2)
@@ -319,10 +319,10 @@ def testing(tfIDFTest,W1,W2,B1,B2):
         p = np.matrix(X[i])
         V1 = np.dot(p,W1)
         V1 = V1 + B1
-        A1 = 1 / (1 + np.exp(-1*V1))
+        A1 = 1 / (1 + np.exp(-0.01*V1))
         V2 = np.dot(A1,W2)
         V2 = V2 + B2
-        A2 = 1 / (1 + np.exp(-1 * V2)) #sigmoid
+        A2 = 1 / (1 + np.exp(-0.01 * V2)) #sigmoid
         A2 = np.matrix.tolist(A2)
         maxi = max(A2[0])
         for r in A2[0]:
@@ -342,20 +342,6 @@ def testing(tfIDFTest,W1,W2,B1,B2):
         label.append(data)
     print 'Finish'
     return label
-        
-def hammingLoss(labelAnjur,labelLarang,labelInfo,dataSetTest):
-    target = []
-    for i in dataSetTest:
-        target.append(i[1])
-    
-    errorH = 0
-    for i in range(len(labelAnjur)):
-        if (labelAnjur[i] != target[i][0]) or (labelLarang[i] != target[i][1]) or (labelInfo[i] != target[i][2]):
-            errorH += 1
-    
-    labelClass = len([list(x) for x in set(tuple(x) for x in target)])
-    hLoss = (1/float(labelClass)) * (1/float(len(dataSetTest))) * errorH
-    return hLoss
 
 def akurasi(label,dataSetTest):
     target = []
@@ -368,6 +354,29 @@ def akurasi(label,dataSetTest):
             benar += 1
             
     return (benar / float(len(label))) * 100
+
+def f1_score(matriksTarget,label,dataSetTest):
+    truePositif = 0
+    falseNegatif = 0
+    falsePositif = 0
+    trueNegatif = 0
+    
+    for i in range(len(matriksTarget)):
+        for j in range(len(dataSetTest)):
+            if dataSetTest[j][1] == matriksTarget[i]:
+                if dataSetTest[j][1] == label[j]:
+                    truePositif += 1
+                else:
+                    falseNegatif += 1
+            else:
+                if label[j] == matriksTarget[i]:
+                    falsePositif += 1
+                else:
+                    trueNegatif += 1
+    
+    precision = truePositif / float(truePositif + falsePositif)
+    recall = truePositif / float(truePositif + falseNegatif)
+    return ((2 * precision * recall) / float(precision + recall)) * 100
 
 def getWeights():
     W1 = np.matrix(np.loadtxt('W1.txt'))
@@ -399,7 +408,7 @@ def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
         words = []
         for x in test[0].lower().split():
             x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
-            x = stemmer.stem(x.encode('utf-8')) #stemming
+#            x = stemmer.stem(x.encode('utf-8')) #stemming
             words.append(x.encode('utf-8'))
         c = list(words).count(word)
         l.append(word)
