@@ -6,7 +6,7 @@ Created on Wed May 09 11:40:38 2018
 """
 
 from openpyxl import load_workbook
-import fixFunction as fc
+import cFunction as fc
 import time
 import numpy as np
 
@@ -33,7 +33,7 @@ for i in range(num_folds): #K-Cross Validation
     print 'Counting Probability for Each Class Given Word w...'
     PIW = fc.probEachClassGivenWord(FW, label, docEachClass)
     print 'Counting Information Gain for Each Class and Word...'
-    IGW = fc.informationGain(PIW,label)
+    IGW = fc.informationGain(preprocessing,PIW,label,docEachClass,training)
     
     ##plot feature for each label
     #fc.plotIGW(IGW[0]) #anjuran
@@ -57,9 +57,7 @@ for i in range(num_folds): #K-Cross Validation
     print '================================================'
     
     #start training ann (artificial neural network)
-    input_p_anjur = len(TFIDF[0][0][1])
-    input_p_larang = len(TFIDF[1][0][1])
-    input_p_info = len(TFIDF[2][0][1])
+    input_p = len(TFIDF[0][1])
     hidden_p = 10
     output_p = 1
     lr = 0.1
@@ -68,9 +66,9 @@ for i in range(num_folds): #K-Cross Validation
     ##i_param = [input_p,hidden_p,output_p,lr,epoch,mseStandar]
     ##np.savetxt('inputParameters.txt',i_param)
     print 'Start training data...'
-    W1Anjur,W2Anjur,B1Anjur,B2Anjur = fc.trainingAnjur(input_p_anjur,hidden_p,output_p,lr,epoch,mseStandar,TFIDF[0],training)
-    W1Larang,W2Larang,B1Larang,B2Larang = fc.trainingLarang(input_p_larang,hidden_p,output_p,lr,epoch,mseStandar,TFIDF[1],training)
-    W1Info,W2Info,B1Info,B2Info = fc.trainingInfo(input_p_info,hidden_p,output_p,lr,epoch,mseStandar,TFIDF[2],training)
+    W1Anjur,W2Anjur,B1Anjur,B2Anjur = fc.trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,TFIDF,training)
+    W1Larang,W2Larang,B1Larang,B2Larang = fc.trainingLarang(input_p,hidden_p,output_p,lr,epoch,mseStandar,TFIDF,training)
+    W1Info,W2Info,B1Info,B2Info = fc.trainingInfo(input_p,hidden_p,output_p,lr,epoch,mseStandar,TFIDF,training)
     print 'Finish'
     
     print '================================================'
@@ -86,9 +84,9 @@ for i in range(num_folds): #K-Cross Validation
     idfTest = fc.idf(tfTest,testing)
     print 'Counting TFxIDF...'
     tfIDFTest = fc.tfIDF(tfTest,testing,idfTest)
-    labelAnjur = fc.testing(tfIDFTest[0],W1Anjur,W2Anjur,B1Anjur,B2Anjur)
-    labelLarang = fc.testing(tfIDFTest[1],W1Larang,W2Larang,B1Larang,B2Larang)
-    labelInfo = fc.testing(tfIDFTest[2],W1Info,W2Info,B1Info,B2Info)
+    labelAnjur = fc.testing(tfIDFTest,W1Anjur,W2Anjur,B1Anjur,B2Anjur)
+    labelLarang = fc.testing(tfIDFTest,W1Larang,W2Larang,B1Larang,B2Larang)
+    labelInfo = fc.testing(tfIDFTest,W1Info,W2Info,B1Info,B2Info)
     print 'Count hamming loss...'
     hLoss = fc.hammingLoss(labelAnjur,labelLarang,labelInfo,testing,label)
     hammingLoss.append(hLoss)

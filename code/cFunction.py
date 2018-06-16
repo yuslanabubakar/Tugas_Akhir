@@ -106,10 +106,10 @@ def docGivenWord(dataSet,preprocessing,label):
 def probEachClassGivenWord(FW, label, docEachClass):
     result = []
     for i in FW:
-        for j in range(len(label)):
+        for j in docEachClass:
             a = []
-            if i[1] == label[j]:
-                piW = (i[2]+1) / float(docEachClass[j][1]+1) #smoothing
+            if i[1] == j[0]:
+                piW = (i[2]+1) / float(j[1]+1) #smoothing
                 a.append(i[0])
                 a.append(i[1])
                 a.append(piW)
@@ -117,28 +117,23 @@ def probEachClassGivenWord(FW, label, docEachClass):
                 
     return result
 
-def informationGain(PIW,label):
+def informationGain(preprocessing,PIW,label,docEachClass,dataSet):
     result = []
     thefile = open('informationGain.txt','w')
-    for i in PIW:
+    for word in preprocessing:
+        nilai = 0
         data = []
-        nilai = -(i[2] * math.log(i[2],2))
+        for i in PIW:
+            if i[0] == word:
+                for j in docEachClass:
+                    if i[1] == j[0]:
+                        nilai = nilai + ((j[1] / float(len(dataSet))) * (-(i[2] * math.log(i[2],2))))
         nilai = 1 - nilai
-        data.append(i[0])
-        data.append(i[1])
+        data.append(word)
         data.append(nilai)
         result.append(data)
         print>>thefile,data
-    
-    IGW = []
-    for i in range(len(label)):
-        igw = []
-        for j in result:
-            if j[1] == label[i]:
-                data = itemgetter(*[0,2])(j)
-                igw.append(data)
-        IGW.append(igw)
-    return IGW
+    return result
 
 def plotIGW(igW):
     x = []
@@ -157,93 +152,79 @@ def plotIGW(igW):
     plt.show()
 
 def thresholdIGW(IGW,value):
-    result = []
-    for i in range(len(IGW)):
-        result.append([x[0] for x in IGW[i] if x[1] >= value])
-    return result
+    return [x[0] for x in IGW if x[1] >= value]
     
 def tf(IGW,dataSet):
     document = []
     for i in dataSet:
         document.append(i[0])
     TF = []
-    for i in range(len(IGW)):
-        tf = []
-        for word in IGW[i]:
-            hasil = []
-            l = []
-            doc = 1
-            for j in document:
-                d = []
-                words = []
-                for x in j[0].lower().split():
-                    x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
-#                    x = stemmer.stem(x.encode('utf-8')) #stemming
-                    words.append(x.encode('utf-8'))
-                c = list(words).count(word)
-                d.append(doc)
-                d.append(c)
-                hasil.append(d)
-                doc = doc + 1
-            l.append(word)
-            l.append(hasil)
-            tf.append(l)
-        TF.append(tf)
-        
+    for word in IGW:
+        hasil = []
+        l = []
+        doc = 1
+        for j in document:
+            d = []
+            words = []
+            for x in j[0].lower().split():
+                x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
+#                x = stemmer.stem(x.encode('utf-8')) #stemming
+                words.append(x.encode('utf-8'))
+            c = list(words).count(word)
+            d.append(doc)
+            d.append(c)
+            hasil.append(d)
+            doc = doc + 1
+        l.append(word)
+        l.append(hasil)
+        TF.append(l)
     return TF
 
 def idf(TF,dataSet):
     IDF = []
-    for i in range(len(TF)):
-        idf = []
-        for j in TF[i]:
-            d = []
-            counts = 0
-            for k in j[1]:
-                if k[1] > 0:
-                    counts = counts + 1
-            counts = math.log((len(dataSet)+len(TF[i]))/float(counts+1)) #smoothing
-            d.append(j[0])
-            d.append(counts)
-            idf.append(d)
-        IDF.append(idf)
-    
+    for i in TF:
+        d = []
+        counts = 0
+        for j in i[1]:
+            if j[1] > 0:
+                counts = counts + 1
+        counts = math.log((len(dataSet)+len(TF))/float(counts+1)) #smoothing
+        d.append(j[0])
+        d.append(counts)
+        IDF.append(d)
     return IDF
 
 def tfIDF(TF,dataSet,IDF):
     TFIDF = []
-    for i in range(len(TF)):
-        result = []
-        for j in range(len(TF[i])):
-            tfidf = 0
-            d = []
-            l = []
-            for k in TF[i][j][1]:
-                dt = []
-                tfidf = k[1] * IDF[i][j][1]
-                dt.append(k[0])
-                dt.append(tfidf)
-                d.append(dt)
-            l.append(TF[i][j][0])
-            l.append(d)
-            result.append(l)
-        tfidf = []
-        for j in range(len(dataSet)):
-            d = []
-            li = []
-            for k in result:
-                dt = []
-                for l in k[1]:
-                    if j+1 == l[0]:
-                        dt.append(k[0])
-                        dt.append(l[1])
-                d.append(dt)
-            li.append(j+1)
-            li.append(d)
-            tfidf.append(li)
-        TFIDF.append(tfidf)
+    for j in range(len(TF)):
+        tfidf = 0
+        d = []
+        l = []
+        for k in TF[j][1]:
+            dt = []
+            tfidf = k[1] * IDF[j][1]
+            dt.append(k[0])
+            dt.append(tfidf)
+            d.append(dt)
+        l.append(TF[j][0])
+        l.append(d)
+        TFIDF.append(l)
+    tfidf = []
+    for j in range(len(dataSet)):
+        d = []
+        li = []
+        for k in TFIDF:
+            dt = []
+            for l in k[1]:
+                if j+1 == l[0]:
+                    dt.append(k[0])
+                    dt.append(l[1])
+            d.append(dt)
+        li.append(j+1)
+        li.append(d)
+        tfidf.append(li)
     
-    return TFIDF
+    return tfidf
 
 def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tdidf,dataSet):
     X = []
@@ -275,10 +256,10 @@ def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tdidf,dataSet):
             p = np.matrix(pp)
             V1 = np.dot(p,W1Anjur)
             V1 = V1 + B1Anjur
-            A1 = 1 / (1 + np.exp(-0.1*V1))
+            A1 = 1 / (1 + np.exp(-0.01*V1))
             V2 = np.dot(A1,W2Anjur)
             V2 = V2 + B2Anjur
-            A2 = 1 / (1 + np.exp(-0.1 * V2))
+            A2 = 1 / (1 + np.exp(-0.01 * V2))
             e = (dataSet[i][1][0] - A2)
             error.append(e)
             
@@ -338,10 +319,10 @@ def trainingLarang(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidf,dataSet):
             p = np.matrix(pp)
             V1 = np.dot(p,W1Larang)
             V1 = V1 + B1Larang
-            A1 = 1 / (1 + np.exp(-0.1*V1))
+            A1 = 1 / (1 + np.exp(-0.01*V1))
             V2 = np.dot(A1,W2Larang)
             V2 = V2 + B2Larang
-            A2 = 1 / (1 + np.exp(-0.1 * V2))
+            A2 = 1 / (1 + np.exp(-0.01 * V2))
             e = (dataSet[i][1][1] - A2)
             error.append(e)
             
@@ -401,10 +382,10 @@ def trainingInfo(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidf,dataSet):
             p = np.matrix(pp)
             V1 = np.dot(p,W1Info)
             V1 = V1 + B1Info
-            A1 = 1 / (1 + np.exp(-0.1*V1))
+            A1 = 1 / (1 + np.exp(-0.01*V1))
             V2 = np.dot(A1,W2Info)
             V2 = V2 + B2Info
-            A2 = 1 / (1 + np.exp(-0.1 * V2))
+            A2 = 1 / (1 + np.exp(-0.01 * V2))
             e = (dataSet[i][1][2] - A2)
             error.append(e)
             
@@ -456,10 +437,10 @@ def testing(tfIDFTest,W1,W2,B1,B2):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
         V1 = np.dot(p,W1)
         V1 = V1 + B1
-        A1 = 1 / (1 + np.exp(-0.1*V1))
+        A1 = 1 / (1 + np.exp(-0.01*V1))
         V2 = np.dot(A1,W2)
         V2 = V2 + B2
-        A2 = 1 / (1 + np.exp(-0.1 * V2))
+        A2 = 1 / (1 + np.exp(-0.01 * V2))
         if A2 >= 0.5:
             label.append(1)
         else:
@@ -562,10 +543,10 @@ def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
     V1 = np.dot(p,W1)
     V1 = V1 + B1
-    A1 = 1 / (1 + np.exp(-1*V1))
+    A1 = 1 / (1 + np.exp(-0.01*V1))
     V2 = np.dot(A1,W2)
     V2 = V2 + B2
-    A2 = 1 / (1 + np.exp(-1 * V2))
+    A2 = 1 / (1 + np.exp(-0.01 * V2))
     for e in A2:
         for j in range(e.shape[1]):
             if e.item(j) >= 0.5:

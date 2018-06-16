@@ -246,7 +246,7 @@ def training(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfIDF,dataSet):
     B2 = np.matrix(np.random.rand(output_p))
     W1 = np.random.rand(input_p,hidden_p)
     W2 = np.random.rand(hidden_p,output_p)
-    while (mse > mseStandar and iterate <= epoch):
+    while (mse > mseStandar and iterate < epoch):
 #        print iterate
         error = []
         mse = 0
@@ -287,10 +287,10 @@ def training(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfIDF,dataSet):
     print 'MSE = ',mse
     print 'Epoch = ',iterate
     print 'Finish'
-    np.savetxt('W1.txt',W1)
-    np.savetxt('W2.txt',W2)
-    np.savetxt('B1.txt',B1)
-    np.savetxt('B2.txt',B2)
+#    np.savetxt('W1.txt',W1)
+#    np.savetxt('W2.txt',W2)
+#    np.savetxt('B1.txt',B1)
+#    np.savetxt('B2.txt',B2)
     return W1,W2,B1,B2
     
 def testing(tfIDFTest,W1,W2,B1,B2):
@@ -312,10 +312,10 @@ def testing(tfIDFTest,W1,W2,B1,B2):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
         V1 = np.dot(p,W1)
         V1 = V1 + B1
-        A1 = 1 / (1 + np.exp(-1*V1))
+        A1 = 1 / (1 + np.exp(-0.1*V1))
         V2 = np.dot(A1,W2)
         V2 = V2 + B2
-        A2 = 1 / (1 + np.exp(-1 * V2))
+        A2 = 1 / (1 + np.exp(-0.1 * V2))
         for e in A2:
             for j in range(e.shape[1]):
                 if e.item(j) >= 0.5:
@@ -338,7 +338,8 @@ def hammingLoss(label,dataSet):
         for err in e:
             errorH += err**2
     
-    labelClass = len([list(x) for x in set(tuple(x) for x in target)])
+#    labelClass = len([list(x) for x in set(tuple(x) for x in target)])
+    labelClass = 3
     hLoss = (1/float(labelClass)) * (1/float(len(dataSet))) * errorH
     print 'Finish'
     return hLoss
