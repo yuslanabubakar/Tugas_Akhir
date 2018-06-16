@@ -1,3 +1,0 @@
-['anjuran', 183]
-['larangan', 91]
-['informasi', 835]
