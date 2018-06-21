@@ -17,6 +17,7 @@ wb = load_workbook('dataMulti.xlsx')
 sheet = wb.active
 dataSet = fc.getData(sheet)
 
+hLossValue = 1
 hammingLoss = []
 num_folds = 5
 subset_size = len(dataSet) / num_folds
@@ -46,7 +47,7 @@ for i in range(num_folds): #K-Cross Validation
     
     ##for i in ig:
     ##    igWThreshold.append(i[0])
-    ##np.savetxt("igWThreshold.txt", igWThreshold, delimiter=",", fmt="%s")
+    np.savetxt("igThresholdMulti.txt", igw, delimiter=",", fmt="%s")
     print 'Counting TF...'
     TF = fc.tf(igw,training)
     print 'Counting IDF...'
@@ -96,6 +97,22 @@ for i in range(num_folds): #K-Cross Validation
     print
     print '================================================'
     print
+    if hLoss < hLossValue:
+        np.savetxt('W1Anjur.txt',W1Anjur)
+        np.savetxt('W2Anjur.txt',W2Anjur)
+        np.savetxt('B1Anjur.txt',B1Anjur)
+        np.savetxt('B2Anjur.txt',B2Anjur)
+        
+        np.savetxt('W1Larang.txt',W1Larang)
+        np.savetxt('W2Larang.txt',W2Larang)
+        np.savetxt('B1Larang.txt',B1Larang)
+        np.savetxt('B2Larang.txt',B2Larang)
+        
+        np.savetxt('W1Info.txt',W1Info)
+        np.savetxt('W2Info.txt',W2Info)
+        np.savetxt('B1Info.txt',B1Info)
+        np.savetxt('B2Info.txt',B2Info)
+        hLossValue = hLoss
 
 print 'Mean hLoss = ' , np.mean(hammingLoss)
 print time.time() - start_time , ' seconds'

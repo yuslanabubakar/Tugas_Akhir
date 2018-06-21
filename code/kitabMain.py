@@ -22,6 +22,7 @@ wb = load_workbook('dataKitab.xlsx')
 sheet = wb.active
 dataSet = fc.getData(sheet)
 
+akurasiValue = 0
 accuracy = []
 num_folds = 5
 subset_size = len(dataSet) / num_folds
@@ -94,6 +95,12 @@ for i in range(num_folds): #K-Cross Validation
     print
     print '================================================'
     print
+    if akurasi > akurasiValue:
+        np.savetxt('W1.txt',W1)
+        np.savetxt('W2.txt',W2)
+        np.savetxt('B1.txt',B1)
+        np.savetxt('B2.txt',B2)
+        akurasiValue = akurasi
 
 print 'Mean Accuracy = ' , np.mean(accuracy)
 print time.time() - start_time , ' seconds'
