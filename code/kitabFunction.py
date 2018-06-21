@@ -54,7 +54,7 @@ def preprocessing(dataSet):
 
     dataStop  = stop_words(data)
     dataStop = np.unique(dataStop)
-    thefile = open('dataStopKitab.txt','w')
+    thefile = open('preprocessingKitab.txt','w')
     for item in dataStop:
         print>>thefile, item
     print 'Preprocessing file saved'
@@ -389,7 +389,7 @@ def getMatriksTarget():
     return np.loadtxt('matriksTarget.txt').tolist()
 
 def getIGWThreshold():
-    with open('igWThreshold.txt') as f:
+    with open('igThresholdKitab.txt') as f:
         alist = f.read().splitlines(True)
     return alist
 
