@@ -498,7 +498,7 @@ def getMatriksTarget():
     return np.loadtxt('matriksTarget.txt').tolist()
 
 def getIGWThreshold():
-    with open('igWThreshold.txt') as f:
+    with open('igThresholdMulti.txt') as f:
         alist = f.read().splitlines(True)
     return alist
 
