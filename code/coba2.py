@@ -20,7 +20,7 @@ matriksTarget = [[0,0,1],
                  [1,1,1]]
 #np.savetxt('matriksTarget.txt',matriksTarget)
 print 'Open File...'
-wb = load_workbook('lala.xlsx')
+wb = load_workbook('dataMulti.xlsx')
 sheet = wb.active
 dataSet = fc.getData(sheet)
 

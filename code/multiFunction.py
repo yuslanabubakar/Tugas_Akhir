@@ -256,10 +256,10 @@ def trainingAnjur(input_p,hidden_p,output_p,lr,epoch,mseStandar,tdidf,dataSet):
             p = np.matrix(pp)
             V1 = np.dot(p,W1Anjur)
             V1 = V1 + B1Anjur
-            A1 = 1 / (1 + np.exp(-0.01*V1))
+            A1 = 1 / (1 + np.exp(-0.1*V1))
             V2 = np.dot(A1,W2Anjur)
             V2 = V2 + B2Anjur
-            A2 = 1 / (1 + np.exp(-0.01 * V2))
+            A2 = 1 / (1 + np.exp(-0.1 * V2))
             e = (dataSet[i][1][0] - A2)
             error.append(e)
             
@@ -319,10 +319,10 @@ def trainingLarang(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidf,dataSet):
             p = np.matrix(pp)
             V1 = np.dot(p,W1Larang)
             V1 = V1 + B1Larang
-            A1 = 1 / (1 + np.exp(-0.01*V1))
+            A1 = 1 / (1 + np.exp(-0.1*V1))
             V2 = np.dot(A1,W2Larang)
             V2 = V2 + B2Larang
-            A2 = 1 / (1 + np.exp(-0.01 * V2))
+            A2 = 1 / (1 + np.exp(-0.1 * V2))
             e = (dataSet[i][1][1] - A2)
             error.append(e)
             
@@ -382,10 +382,10 @@ def trainingInfo(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfidf,dataSet):
             p = np.matrix(pp)
             V1 = np.dot(p,W1Info)
             V1 = V1 + B1Info
-            A1 = 1 / (1 + np.exp(-0.01*V1))
+            A1 = 1 / (1 + np.exp(-0.1*V1))
             V2 = np.dot(A1,W2Info)
             V2 = V2 + B2Info
-            A2 = 1 / (1 + np.exp(-0.01 * V2))
+            A2 = 1 / (1 + np.exp(-0.1 * V2))
             e = (dataSet[i][1][2] - A2)
             error.append(e)
             
@@ -437,10 +437,10 @@ def testing(tfIDFTest,W1,W2,B1,B2):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
         V1 = np.dot(p,W1)
         V1 = V1 + B1
-        A1 = 1 / (1 + np.exp(-0.01*V1))
+        A1 = 1 / (1 + np.exp(-0.1*V1))
         V2 = np.dot(A1,W2)
         V2 = V2 + B2
-        A2 = 1 / (1 + np.exp(-0.01 * V2))
+        A2 = 1 / (1 + np.exp(-0.1 * V2))
         if A2 >= 0.5:
             label.append(1)
         else:
@@ -543,10 +543,10 @@ def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
     V1 = np.dot(p,W1)
     V1 = V1 + B1
-    A1 = 1 / (1 + np.exp(-0.01*V1))
+    A1 = 1 / (1 + np.exp(-0.1*V1))
     V2 = np.dot(A1,W2)
     V2 = V2 + B2
-    A2 = 1 / (1 + np.exp(-0.01 * V2))
+    A2 = 1 / (1 + np.exp(-0.1 * V2))
     for e in A2:
         for j in range(e.shape[1]):
             if e.item(j) >= 0.5:

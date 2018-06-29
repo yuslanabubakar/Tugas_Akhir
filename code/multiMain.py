@@ -42,7 +42,7 @@ for i in range(num_folds): #K-Cross Validation
     #fc.plotIGW(IGW[2]) #informasi
     
     #get threshold for each IGW
-    value = 0.85
+    value = 0.60
     igw = fc.thresholdIGW(IGW,value)
     
 #    for i in ig:
@@ -63,7 +63,7 @@ for i in range(num_folds): #K-Cross Validation
     output_p = 1
     lr = 0.1
     epoch = 1000
-    mseStandar = 0.01
+    mseStandar = 0.003
     ##i_param = [input_p,hidden_p,output_p,lr,epoch,mseStandar]
     ##np.savetxt('inputParameters.txt',i_param)
     print 'Start training data...'
@@ -111,7 +111,6 @@ for i in range(num_folds): #K-Cross Validation
         np.savetxt('B1Info.txt',B1Info)
         np.savetxt('B2Info.txt',B2Info)
         hLossValue = hLoss
-        
 
 print 'Mean hLoss = ' , np.mean(hammingLoss)
 print time.time() - start_time , ' seconds'
