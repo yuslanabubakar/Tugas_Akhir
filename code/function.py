@@ -257,10 +257,10 @@ def training(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfIDF,dataSet):
 #                p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
             V1 = np.dot(p,W1)
             V1 = V1 + B1
-            A1 = 1 / (1 + np.exp(-0.1*V1))
+            A1 = 1 / (1 + np.exp(-0.01*V1))
             V2 = np.dot(A1,W2)
             V2 = V2 + B2
-            A2 = 1 / (1 + np.exp(-0.1 * V2))
+            A2 = 1 / (1 + np.exp(-0.01 * V2))
             T = np.matrix(dataSet[i][1])
             e = (T - A2)
             error.append(e)
@@ -312,10 +312,10 @@ def testing(tfIDFTest,W1,W2,B1,B2):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
         V1 = np.dot(p,W1)
         V1 = V1 + B1
-        A1 = 1 / (1 + np.exp(-0.1*V1))
+        A1 = 1 / (1 + np.exp(-0.01*V1))
         V2 = np.dot(A1,W2)
         V2 = V2 + B2
-        A2 = 1 / (1 + np.exp(-0.1 * V2))
+        A2 = 1 / (1 + np.exp(-0.01 * V2))
         for e in A2:
             for j in range(e.shape[1]):
                 if e.item(j) >= 0.5:
@@ -363,13 +363,13 @@ def getInputParameters():
     i_param = np.loadtxt('inputParametersMulti.txt').tolist()
     return i_param[0],i_param[1],i_param[2],i_param[3],i_param[4],i_param[5]
 
-def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
+def testClassify(dataTest,W1,W2,B1,B2,feature,matriksTarget):
     test = []
     test.append(dataTest)
     
     #count TF
     testTF = []
-    for word in igWThreshold:
+    for word in feature:
         l = []
         words = []
         for x in test[0].lower().split():
@@ -416,10 +416,10 @@ def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
     V1 = np.dot(p,W1)
     V1 = V1 + B1
-    A1 = 1 / (1 + np.exp(-0.1*V1))
+    A1 = 1 / (1 + np.exp(-0.01*V1))
     V2 = np.dot(A1,W2)
     V2 = V2 + B2
-    A2 = 1 / (1 + np.exp(-0.1 * V2))
+    A2 = 1 / (1 + np.exp(-0.01 * V2))
     for e in A2:
         for j in range(e.shape[1]):
             if e.item(j) >= 0.5:

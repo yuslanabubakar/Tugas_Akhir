@@ -90,6 +90,7 @@ for i in range(num_folds): #K-Cross Validation
         np.savetxt('W2Multi.txt',W2)
         np.savetxt('B1Multi.txt',B1)
         np.savetxt('B2Multi.txt',B2)
+        np.savetxt("igWThresholdMulti.txt", igWThreshold, delimiter=",", fmt="%s")
         hlossValue = hLoss
 
 print 'Mean hLoss = ' , np.mean(hammingLoss)

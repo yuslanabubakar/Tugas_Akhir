@@ -13,11 +13,11 @@ def home():
 def classify():
     W1,W2,B1,B2 = fc.getWeights()
     ig = fc.getIGWThreshold()
-    igWThreshold = [line[:-1] for line in ig]
+    feature = [line[:-1] for line in ig]
     matriksTarget = fc.getMatriksTarget()
     if request.method == 'POST':
         hadis = request.form['hadis']
-        label,klasifikasi = fc.testClassify(hadis,W1,W2,B1,B2,igWThreshold,matriksTarget)
+        label,klasifikasi = fc.testClassify(hadis,W1,W2,B1,B2,feature,matriksTarget)
         result = {}
         result['label'] = label
 #        result['w1'] = W1
