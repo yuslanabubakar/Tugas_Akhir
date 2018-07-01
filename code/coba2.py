@@ -43,7 +43,7 @@ for i in range(num_folds): #K-Cross Validation
     igW = fc.informationGain(docEachClass,training,piW,dataPre)
     
     #get words if igW value > threshold
-    igWThreshold = [x[0] for x in igW if x[1] > 0.60]
+    igWThreshold = [x[0] for x in igW if x[1] > 0.85]
 #    igWThreshold = []
 #    for i in ig:
 #        igWThreshold.append(i[0])
