@@ -18,12 +18,13 @@ matriksTarget = [[0,0,1],
                  [1,0,1],
                  [1,1,0],
                  [1,1,1]]
-#np.savetxt('matriksTarget.txt',matriksTarget)
+np.savetxt('matriksTargetMulti.txt',matriksTarget)
 print 'Open File...'
-wb = load_workbook('dataMulti.xlsx')
+wb = load_workbook('data.xlsx')
 sheet = wb.active
 dataSet = fc.getData(sheet)
 
+hlossValue = 1
 hammingLoss = []
 num_folds = 5
 subset_size = len(dataSet) / num_folds
@@ -46,7 +47,7 @@ for i in range(num_folds): #K-Cross Validation
 #    igWThreshold = []
 #    for i in ig:
 #        igWThreshold.append(i[0])
-    #np.savetxt("igWThreshold.txt", igWThreshold, delimiter=",", fmt="%s")
+    np.savetxt("igWThresholdMulti.txt", igWThreshold, delimiter=",", fmt="%s")
     print 'Counting TF...'
     tf = fc.tf(igWThreshold,training)
     print 'Counting IDF...'
@@ -83,6 +84,13 @@ for i in range(num_folds): #K-Cross Validation
     print
     print '================================================'
     print
+    
+    if hLoss < hlossValue:
+        np.savetxt('W1Multi.txt',W1)
+        np.savetxt('W2Multi.txt',W2)
+        np.savetxt('B1Multi.txt',B1)
+        np.savetxt('B2Multi.txt',B2)
+        hlossValue = hLoss
 
 print 'Mean hLoss = ' , np.mean(hammingLoss)
 print time.time() - start_time , ' seconds'

@@ -54,7 +54,7 @@ def preprocessing(dataSet):
 
     dataStop  = stop_words(data)
     dataStop = np.unique(dataStop)
-    thefile = open('dataStop.txt','w')
+    thefile = open('preprocessingMulti.txt','w')
     for item in dataStop:
         print>>thefile, item
     print 'Preprocessing file saved'
@@ -62,7 +62,7 @@ def preprocessing(dataSet):
 
 def docEachClass(matriksTarget,dataSet,dataPre):
     data = []
-    thefile = open('docEachClass.txt','w')
+    thefile = open('docEachClassMulti.txt','w')
     for i in matriksTarget:
         d = []
         count = 0
@@ -98,7 +98,7 @@ def docGivenWord(matriksTarget,dataPre,dataSet):
             data.append(k)
             data.append(countDoc)
             result.append(data)
-    thefile = open('Fw.txt','w')
+    thefile = open('FwMulti.txt','w')
     for item in result:
         print>>thefile, item
     print 'Finish'
@@ -120,7 +120,7 @@ def probEachClassGivenWord(Fw,docEachClass,matriksTarget):
 
 def informationGain(docEachClass,dataSet,piW,dataPre):
     result = []
-    thefile = open('informationGain.txt','w')
+    thefile = open('informationGainMulti.txt','w')
     for k in dataPre:
         nilai = 0
         data = []
@@ -345,22 +345,22 @@ def hammingLoss(label,dataSet):
     return hLoss
 
 def getWeights():
-    W1 = np.matrix(np.loadtxt('W1.txt'))
-    W2 = np.matrix(np.loadtxt('W2.txt'))
-    B1 = np.matrix(np.loadtxt('B1.txt'))
-    B2 = np.matrix(np.loadtxt('B2.txt'))
+    W1 = np.matrix(np.loadtxt('W1Multi.txt'))
+    W2 = np.matrix(np.loadtxt('W2Multi.txt'))
+    B1 = np.matrix(np.loadtxt('B1Multi.txt'))
+    B2 = np.matrix(np.loadtxt('B2Multi.txt'))
     return W1,W2,B1,B2
 
 def getMatriksTarget():
-    return np.loadtxt('matriksTarget.txt').tolist()
+    return np.loadtxt('matriksTargetMulti.txt').tolist()
 
 def getIGWThreshold():
-    with open('igWThreshold.txt') as f:
+    with open('igWThresholdMulti.txt') as f:
         alist = f.read().splitlines(True)
     return alist
 
 def getInputParameters():
-    i_param = np.loadtxt('inputParameters.txt').tolist()
+    i_param = np.loadtxt('inputParametersMulti.txt').tolist()
     return i_param[0],i_param[1],i_param[2],i_param[3],i_param[4],i_param[5]
 
 def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
@@ -374,7 +374,7 @@ def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
         words = []
         for x in test[0].lower().split():
             x = re.sub('[(;:,.\'`?!0123456789)]', '', x)
-#                x = stemmer.stem(x.encode('utf-8')) #stemming
+#            x = stemmer.stem(x.encode('utf-8')) #stemming
             words.append(x.encode('utf-8'))
         c = list(words).count(word)
         l.append(word)
@@ -416,10 +416,10 @@ def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
 #            p[j] = xmin + (((p[j] - min(p))*(xmax - xmin)) / (max(p) - min(p)))
     V1 = np.dot(p,W1)
     V1 = V1 + B1
-    A1 = 1 / (1 + np.exp(-1*V1))
+    A1 = 1 / (1 + np.exp(-0.1*V1))
     V2 = np.dot(A1,W2)
     V2 = V2 + B2
-    A2 = 1 / (1 + np.exp(-1 * V2))
+    A2 = 1 / (1 + np.exp(-0.1 * V2))
     for e in A2:
         for j in range(e.shape[1]):
             if e.item(j) >= 0.5:
