@@ -59,6 +59,7 @@ anugerahkanlah
 arab
 arafah
 asalnya
+ashar
 aslinya
 asyats
 atap
@@ -71,6 +72,7 @@ ayahku
 ayahmu
 ayahnya
 ayam
+ayat
 ayat-ayat
 baca
 bacaan
@@ -111,6 +113,7 @@ bapakmu
 bapaknya
 barakah-mu
 barangkali
+barangsiapa
 baranya
 barisan
 barulah
@@ -147,6 +150,7 @@ bebaskanlah
 becek
 bediri
 begitulah
+bejana
 bekas
 bekas-bekas
 bekasnya
@@ -194,6 +198,7 @@ berdatanganlah
 berdebat
 berdesakan
 berdiam
+berdiri
 berdirilah
 berdoa
 berdosa
@@ -300,6 +305,7 @@ berpisah
 berpostur
 berpuasa
 berputar
+bersabda
 bersabdalah
 bersaksi
 bersamaan
@@ -361,6 +367,7 @@ berusaha
 berusia
 berwarna
 berwibawa
+berwudlu
 berwudlulah
 berzina
 besarnya
@@ -377,6 +384,7 @@ bibirnya
 bicara
 bihamdika
 biji
+bilal
 bilangan
 binasa
 binasalah
@@ -458,6 +466,7 @@ dahulukanlah
 dajjaal
 dalamnya
 dapati
+darah
 darahnya
 dariku
 darimu
@@ -730,6 +739,7 @@ dosa
 dosa-dosa
 dosa-dosanya
 dosanya
+duduk
 dudukkan
 dudukkanlah
 duduknya
@@ -805,9 +815,11 @@ hadapkan
 hadats
 hadiah
 hadir
+hadits
 haditsnya
 hafal
 hafalan
+haid
 haidmu
 hajat
 haji
@@ -846,6 +858,7 @@ hati
 hatinya
 helai
 hembusan
+hendaklah
 hendaknya
 heran
 hernia
@@ -896,6 +909,7 @@ ilmu-ilmu
 ilmuku
 ilmumu
 ilmunya
+imam
 imamah
 imbalan
 ingatkanlah
@@ -919,6 +933,7 @@ isteri-isterinya
 isterinya
 istintsaq
 istrimu
+isyarat
 itidal
 itikaf
 izin
@@ -984,6 +999,7 @@ kainnya
 kaki
 kakiku
 kakimu
+kakinya
 kalangan
 kalbi
 kalimat
@@ -996,6 +1012,7 @@ kamarnya
 kambing
 kamipun
 kampung
+kanannya
 kandang
 kantong
 kantuk
@@ -1012,6 +1029,7 @@ kasih
 kasihan
 kasur
 katakanlah
+kaum
 kaumku
 kaummu
 kaumnya
@@ -1022,6 +1040,7 @@ keadaanmu
 keadaannya
 keajaiban
 kearahku
+kebaikan
 kebanyakan
 kebenaran
 keberadaan
@@ -1032,6 +1051,7 @@ kebosanan
 kebun
 keburukan
 kebutuhan
+kecuali
 kecukupan
 kedatangan
 kediaman
@@ -1109,9 +1129,12 @@ kentut
 kenyang
 kepada-ku
 kepada-mu
+kepadaku
 kepadamu
+kepala
 kepalaku
 kepalamu
+kepalanya
 kepalnya
 keperluan
 keperluanku
@@ -1172,6 +1195,7 @@ kiblatku
 kiblatnya
 kilau
 kilauan
+kirinya
 kisah
 kismis
 kitab
@@ -1216,6 +1240,7 @@ kutukan
 lafadz
 lahir
 lajang
+laki-laki
 laknat
 lakukanlah
 lalang
@@ -1287,6 +1312,7 @@ lutut-lutut
 mabad
 mabrur
 maghram
+maghrib
 maharnya
 majlisnya
 maju
@@ -1297,7 +1323,9 @@ makhluk
 makkah
 makmum
 maksiat
+malaikat
 malaikat-malaikat-nya
+malam
 malam-malam
 malammu
 malamnya
@@ -1305,12 +1333,14 @@ malas
 malikat
 malu
 manasikku
+mandi
 mandilah
 mangkuk
 mani
 manisnya
 mantan
 mantel
+manusia
 maqam
 maqdis
 marilah
@@ -1318,17 +1348,20 @@ maruf
 masa-masa
 masak
 masanya
+masjid
 masjid-masjid
 masjidnya
 masukkan
 masukkanlah
 masuknya
+matahari
 matanya
 maukah
 maukan
 melahirkan
 melaju
 melaknat
+melaksanakan
 melaksanakannya
 melakukannya
 melalaikannya
@@ -1382,6 +1415,7 @@ memasukinya
 memasukkan
 memasukkannya
 mematuk-matuk
+membaca
 membacakan
 membacakannya
 membacanya
@@ -1401,8 +1435,10 @@ membangun
 membangunkan
 membantingnya
 membantu
+membasuh
 membasuhnya
 membatasinya
+membawa
 membawakan
 membawaku
 membawanya
@@ -1456,11 +1492,14 @@ memeranginya
 memercikinya
 memercikkannya
 memerdekakan
+memerintahkan
 memerintahkanmu
 memerintahkannya
 memerlukannya
 memilih
+memiliki
 memilikinya
+memimpin
 memindahkan
 meminjamkan
 memintanya
@@ -1541,6 +1580,7 @@ mencelup
 menceraikan
 menceraikannya
 mencerca
+menceritakan
 menceritakannya
 menciduk
 mencintai
@@ -1569,6 +1609,7 @@ mendekati
 mendekatkan
 mendekatkannya
 mendekatlah
+mendengar
 mendengarkan
 mendengarkannya
 mendengarnya
@@ -1607,6 +1648,7 @@ menerus
 meneruskan
 menetapkan
 meneteskan
+mengabarkan
 mengadu
 mengadukan
 mengagumi
@@ -1628,12 +1670,14 @@ mengalirkan
 mengalirnya
 mengamalkan
 mengamati
+mengambil
 mengambilkan
 mengambilnya
 mengampuni
 mengandung
 menganggap
 menganggapnya
+mengangkat
 mengangkatnya
 mengangkut
 mengantar
@@ -1650,6 +1694,7 @@ mengeluarkannya
 mengembalikannya
 mengenaiku
 mengenainya
+mengenakan
 mengenakannya
 mengenal
 mengenali
@@ -1689,6 +1734,7 @@ menggunakannya
 mengguyur
 mengguyurkan
 mengguyurkannya
+menghadap
 menghadapkan
 menghadaplah
 menghadapnya
@@ -1965,6 +2011,7 @@ murtad
 mushibah
 musibah
 musim
+muslim
 muslimin
 musuhku
 musyrik
@@ -1993,6 +2040,7 @@ naungan
 naungan-nya
 negeri
 nenek
+neraka
 niat
 niatnya
 nifaq
@@ -2001,6 +2049,7 @@ nikmat-nikmat
 niscaya
 non-arab
 nujum
+orang-orang
 orangnya
 orangpun
 orangtua
@@ -2014,6 +2063,7 @@ pahaku
 pahala
 pahalanya
 paham
+pakaian
 pakaianku
 pakaiannnya
 pakaiannya
@@ -2147,6 +2197,7 @@ perdagangan
 perdebatan
 perdengarkan
 perempuan
+pergi
 pergilah
 pergunakanlah
 perhatikan
@@ -2229,6 +2280,7 @@ pohon
 pohon-pohon
 pohonnya
 polos
+posisi
 posisimu
 posisinya
 potongan
@@ -2241,6 +2293,7 @@ pukulan
 pukulannya
 pulang
 pulanglah
+puluh
 puncak
 pundak
 pundakmu
@@ -2324,10 +2377,12 @@ rubah
 rugi
 ruh-ruh
 ruku
+rukuk
 rukuklah
 rukuknya
 rukun
 rukun-rukun
+rumah
 rumah-rumah
 rumahku
 rumahmu
@@ -2343,6 +2398,7 @@ sadan
 sadar
 sadarkan
 safar
+sahabat
 sahabatku
 sahabatnya
 sahara
@@ -2393,6 +2449,7 @@ sebahagian
 sebarkan
 sebatang
 sebatas
+sebelah
 sebelahnya
 sebelas
 sebelumku
@@ -2433,6 +2490,7 @@ selembar
 selendang
 selendangmu
 selendangnya
+selesai
 selesailah
 selesainya
 selimut
@@ -2451,6 +2509,7 @@ sembunyi-sembunyi
 sembunyikan
 semerbak
 semestinya
+semoga
 sempit
 sempurna
 sempurnakan
@@ -2462,6 +2521,7 @@ sengaja
 sengsara
 seni
 senior
+seorangpun
 sepadan
 sepakat
 sepasang
@@ -2490,6 +2550,7 @@ sesuatupun
 sesudahku
 sesuka
 sesukanya
+sesungguhnya
 setan
 setan-setan
 setandan
@@ -2510,12 +2571,14 @@ shalah
 shalatku
 shalatlah
 shalatmu
+shalatnya
 shalawat
 shalawat-nya
 shalluu
 shaum
 shaumnya
 shirath
+shubuh
 sidang
 sidratul
 sifat
@@ -2539,6 +2602,7 @@ siramlah
 sisa
 sisa-sisa
 sisanya
+sisi
 sisi-ku
 sisi-mu
 sisi-nya
@@ -2556,6 +2620,7 @@ stempel
 suami
 suaminya
 suapkan
+suara
 suara-suara
 suaranya
 subuh
@@ -2563,6 +2628,7 @@ suci
 sucikanlah
 sucinya
 sudan
+sujud
 sujudlah
 sujudnya
 suka
@@ -2574,6 +2640,7 @@ sulit
 sumur
 sunah
 sungai
+sungguh
 sunnah
 sunnat
 surah
@@ -2594,6 +2661,7 @@ syaikh
 syaqiq
 syarat
 syarat-syarat
+syubah
 syubhat
 taatlah
 tabir
@@ -2612,12 +2680,14 @@ talbiyah
 tali
 taman-taman
 tambahan
+tanah
 tanahnya
 tanaman
 tanda-tanda
 tanda-tandanya
 tangan-nya
 tanganku
+tangannya
 tangga
 tanggung
 tanggungan
@@ -2643,6 +2713,7 @@ tegak
 tegakkanlah
 teladan
 telanjang
+telapak
 telinga
 telingaku
 telunjuknya
@@ -2757,6 +2828,7 @@ tiang-tiang
 tiangnya
 tiap-tiap
 tibalah
+tidur
 tidurku
 tidurlah
 tidurnya
@@ -2876,6 +2948,7 @@ waktu-waktu
 walid
 walimahan
 wangi
+wanita
 wanita-wanita
 warhamnii
 waris
@@ -2887,6 +2960,7 @@ wasilah
 wc
 wewangian
 witir
+wudlu
 wudluku
 wudlunya
 yahudi
@@ -2900,3 +2974,4 @@ zamah
 zaman
 zamzam
 zhalim
+zhuhur
