@@ -128,7 +128,8 @@ def informationGain(docEachClass,dataSet,piW,dataPre):
             if k == i[0]:
                 for j in docEachClass:
                     if j[0] == i[1]:
-                        nilai = nilai + ((j[1] / float(len(dataSet))) * (-(i[2] * math.log(i[2],2))))
+#                        nilai = nilai + ((j[1] / float(len(dataSet))) * (-(i[2] * math.log(i[2],2))))
+                        nilai = nilai + ((j[1] / float(len(dataSet))) * (- i[2]*np.log2(i[2]) - (1 - i[2])*np.log2((1 - i[2]))))
         nilai = 1 - nilai
         data.append(k)
         data.append(nilai)

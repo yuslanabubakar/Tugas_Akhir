@@ -20,7 +20,7 @@ matriksTarget = [[0,0,1],
                  [1,1,1]]
 np.savetxt('matriksTargetMulti.txt',matriksTarget)
 print 'Open File...'
-wb = load_workbook('data.xlsx')
+wb = load_workbook('dataMulti.xlsx')
 sheet = wb.active
 dataSet = fc.getData(sheet)
 
@@ -47,7 +47,7 @@ for i in range(num_folds): #K-Cross Validation
 #    igWThreshold = []
 #    for i in ig:
 #        igWThreshold.append(i[0])
-    np.savetxt("igWThresholdMulti.txt", igWThreshold, delimiter=",", fmt="%s")
+#    np.savetxt("igWThresholdMulti.txt", igWThreshold, delimiter=",", fmt="%s")
     print 'Counting TF...'
     tf = fc.tf(igWThreshold,training)
     print 'Counting IDF...'
