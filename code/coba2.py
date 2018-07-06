@@ -59,7 +59,7 @@ for i in range(num_folds): #K-Cross Validation
     input_p = len(tfIDF[0][1])
     hidden_p = 10
     output_p = 3
-    lr = 0.1
+    lr = 0.05
     epoch = 1000
     mseStandar = 0.01
     #i_param = [input_p,hidden_p,output_p,lr,epoch,mseStandar]

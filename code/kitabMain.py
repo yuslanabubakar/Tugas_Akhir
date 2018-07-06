@@ -50,7 +50,7 @@ for i in range(num_folds): #K-Cross Validation
     #
     ###for i in ig:
     ###    igWThreshold.append(i[0])
-    np.savetxt("igThresholdKitab.txt", igw, delimiter=",", fmt="%s")
+#    np.savetxt("igThresholdKitab.txt", igw, delimiter=",", fmt="%s")
     print 'Counting TF...'
     TF = fc.tf(igw,training)
     print 'Counting IDF...'
@@ -100,6 +100,7 @@ for i in range(num_folds): #K-Cross Validation
         np.savetxt('W2.txt',W2)
         np.savetxt('B1.txt',B1)
         np.savetxt('B2.txt',B2)
+        np.savetxt("igThresholdKitab.txt", igw, delimiter=",", fmt="%s")
         akurasiValue = akurasi
 
 print 'Mean Accuracy = ' , np.mean(accuracy)

@@ -74,7 +74,7 @@ def docEachClass(matriksTarget,dataSet,dataPre):
         data.append(d)
         print>>thefile, d
     
-    print 'Finish'
+#    print 'Finish'
     return data
 
 def docGivenWord(matriksTarget,dataPre,dataSet):
@@ -101,7 +101,7 @@ def docGivenWord(matriksTarget,dataPre,dataSet):
     thefile = open('FwMulti.txt','w')
     for item in result:
         print>>thefile, item
-    print 'Finish'
+#    print 'Finish'
     return result
 
 def probEachClassGivenWord(Fw,docEachClass,matriksTarget):
@@ -115,7 +115,7 @@ def probEachClassGivenWord(Fw,docEachClass,matriksTarget):
                 a.append(i[1])
                 a.append(piW)
                 result.append(a)
-    print 'Finish'
+#    print 'Finish'
     return result
 
 def informationGain(docEachClass,dataSet,piW,dataPre):
@@ -128,14 +128,17 @@ def informationGain(docEachClass,dataSet,piW,dataPre):
             if k == i[0]:
                 for j in docEachClass:
                     if j[0] == i[1]:
-#                        nilai = nilai + ((j[1] / float(len(dataSet))) * (-(i[2] * math.log(i[2],2))))
-                        nilai = nilai + ((j[1] / float(len(dataSet))) * (- i[2]*np.log2(i[2]) - (1 - i[2])*np.log2((1 - i[2]))))
+                        nilai = nilai + ((j[1] / float(len(dataSet))) * (-(i[2] * math.log(i[2],2))))
+#                        ent = 0
+#                        if (i[2] != 0 and i[2] != 1):
+#                            ent = (- i[2]*np.log2(i[2]) - (1 - i[2])*np.log2((1 - i[2])))
+#                        nilai = nilai + ((j[1] / float(len(dataSet))) * ent)
         nilai = 1 - nilai
         data.append(k)
         data.append(nilai)
         result.append(data)
         print>>thefile,data
-    print 'Finish'
+#    print 'Finish'
     return result
 
 def plotIGW(igW):
@@ -178,7 +181,7 @@ def tf(igWThreshold, dataSet):
         l.append(word)
         l.append(hasil)
         result.append(l)
-    print 'Finish'
+#    print 'Finish'
     return result
 
 def idf(tf,dataSet):
@@ -193,7 +196,7 @@ def idf(tf,dataSet):
         data.append(i[0])
         data.append(counts)
         result.append(data)
-    print 'Finish'
+#    print 'Finish'
     return result
 
 def tfIDF(tf,idf,dataSet):
@@ -226,7 +229,7 @@ def tfIDF(tf,idf,dataSet):
         l.append(d)
         tfidf.append(l)
     result = tfidf
-    print 'Finish'
+#    print 'Finish'
     return result
 
 def training(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfIDF,dataSet):
@@ -287,7 +290,7 @@ def training(input_p,hidden_p,output_p,lr,epoch,mseStandar,tfIDF,dataSet):
         iterate += 1
     print 'MSE = ',mse
     print 'Epoch = ',iterate
-    print 'Finish'
+#    print 'Finish'
 #    np.savetxt('W1.txt',W1)
 #    np.savetxt('W2.txt',W2)
 #    np.savetxt('B1.txt',B1)
@@ -303,7 +306,7 @@ def testing(tfIDFTest,W1,W2,B1,B2):
         X.append(data)
     
     #start testing
-    print 'Now start testing data...'
+#    print 'Now start testing data...'
     label = []
     for i in range(len(X)):
         #feedforward
@@ -324,7 +327,7 @@ def testing(tfIDFTest,W1,W2,B1,B2):
                 else:
                     data.append(0)
         label.append(data)
-    print 'Finish'
+#    print 'Finish'
     return label
         
 def hammingLoss(label,dataSet):
@@ -342,7 +345,7 @@ def hammingLoss(label,dataSet):
 #    labelClass = len([list(x) for x in set(tuple(x) for x in target)])
     labelClass = 3
     hLoss = (1/float(labelClass)) * (1/float(len(dataSet))) * errorH
-    print 'Finish'
+#    print 'Finish'
     return hLoss
 
 def getWeights():
