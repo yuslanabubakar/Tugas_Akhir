@@ -386,7 +386,7 @@ def getWeights():
     return W1,W2,B1,B2
 
 def getMatriksTarget():
-    return np.loadtxt('matriksTarget.txt').tolist()
+    return np.loadtxt('matriksTargetKitab.txt').tolist()
 
 def getIGWThreshold():
     with open('igThresholdKitab.txt') as f:
@@ -462,18 +462,14 @@ def testClassify(dataTest,W1,W2,B1,B2,igWThreshold,matriksTarget):
                 label.append(0)
     
     if label == matriksTarget[0]:
-        klasifikasi = 'Informasi'
+        klasifikasi = 'Iman'
     elif label == matriksTarget[1]:
-        klasifikasi = 'Larangan'
+        klasifikasi = 'Ilmu'
     elif label == matriksTarget[2]:
-        klasifikasi = 'Larangan-Informasi'
+        klasifikasi = 'Wudhu'
     elif label == matriksTarget[3]:
-        klasifikasi = 'Anjuran'
+        klasifikasi = 'Shalat'
     elif label == matriksTarget[4]:
-        klasifikasi = 'Anjuran-Informasi'
-    elif label == matriksTarget[5]:
-        klasifikasi = 'Anjuran-Larangan'
-    elif label == matriksTarget[6]:
-        klasifikasi = 'Anjuran-Larangan-Informasi'
+        klasifikasi = 'Waktu Shalat'
     
     return label,klasifikasi
