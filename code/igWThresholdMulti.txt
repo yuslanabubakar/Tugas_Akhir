@@ -51,7 +51,6 @@ bantulah
 banyaklah
 bapakku
 bapaknya
-barangsiapa
 barisan
 basah
 basuhlah
@@ -87,7 +86,6 @@ berdasarkan
 berdebat
 berdesakan
 berdiam
-berdiri
 berdirilah
 berdoa
 berdoalah
@@ -305,7 +303,6 @@ doa
 dosa
 dosa-dosanya
 dosanya
-duduk
 duduknya
 dunia
 dzat
@@ -330,15 +327,12 @@ gantilah
 gelas
 gembira
 gerhan
-gerhana
 gigi
 guru
 hadapan
 hadapanku
 hadapannya
 hadir
-hadits
-haid
 haidmu
 hajat
 haji
@@ -452,7 +446,6 @@ keberadaan
 kebesaran
 kebohongan
 keburukan
-kecuali
 kediaman
 keempat
 keenam
@@ -532,7 +525,6 @@ kuburan
 kurban
 kurma
 kutanyakan
-laki-laki
 lakukanlah
 lampau
 langit
@@ -566,18 +558,15 @@ makanan
 makanlah
 makkah
 malaikat
-malam
 malam-malam
 malammu
 malu
 manasik
 manasikku
-mandi
 mandilah
 manfaat
 mangkuk
 mantel
-manusia
 maqam
 maqburiy
 marahari
@@ -585,14 +574,11 @@ marilah
 maruf
 masa-masa
 masak
-masjid
 masjid-masjid
 masukkan
-matahari
 matinya
 maukah
 melaknat
-melaksanakan
 melaksanakannya
 melakukannya
 melampaui
@@ -651,7 +637,6 @@ memenuhi
 memenuhinya
 memerangi
 memercikinya
-memerintahkan
 memerintahkanmu
 memilih
 memiliki
@@ -683,7 +668,6 @@ mencari
 mencederai
 mencela
 mencelakakan
-menceritakan
 mencium
 mencuci
 mencucinya
@@ -695,7 +679,6 @@ mendapatkannya
 mendatanginya
 mendekati
 mendekatlah
-mendengar
 mendengarnya
 mendengki
 mendidiknya
@@ -797,7 +780,6 @@ menyelesaikan
 menyelimutkan
 menyelisihi
 menyelisihnya
-menyembelih
 menyembelihnya
 menyempurnakan
 menyengat
@@ -858,7 +840,6 @@ neraka
 nikmat-nikmat
 niscaya
 niyatkan
-orang-orang
 orangnya
 pagi
 pahala
@@ -978,7 +959,6 @@ rasakan
 rasul
 rasul-mu
 rasul-nya
-rasulullah
 ratus
 raya
 redaksi
@@ -1086,7 +1066,6 @@ shaf-shaf
 shafa
 shafwan
 shalatku
-shalatlah
 shalatmu
 shalatnya
 shalawat-nya
@@ -1114,7 +1093,6 @@ suara
 subuh
 suci
 suhail
-sujud
 sujudlah
 sujudpun
 suka
@@ -1257,7 +1235,6 @@ wajahku
 wajib
 walid
 wangi
-wanita
 wanita-wanita
 warna-warni
 wc

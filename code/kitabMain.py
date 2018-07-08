@@ -16,7 +16,7 @@ matriksTarget = [[1,0,0,0,0],
                  [0,0,1,0,0],
                  [0,0,0,1,0],
                  [0,0,0,0,1]]
-#np.savetxt('matriksTarget.txt',matriksTarget)
+np.savetxt('matriksTargetKitab.txt',matriksTarget)
 print 'Open File...'
 wb = load_workbook('dataKitab.xlsx')
 sheet = wb.active
@@ -64,7 +64,7 @@ for i in range(num_folds): #K-Cross Validation
     input_p = len(TFIDF[0][1])
     hidden_p = 10
     output_p = 5
-    lr = 0.1
+    lr = 0.05
     epoch = 3000
     mseStandar = 0.01
     ###i_param = [input_p,hidden_p,output_p,lr,epoch,mseStandar]
