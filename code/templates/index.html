@@ -35,7 +35,9 @@
   <script>
       $('.klasifikasi').click(function(e){
           $.post('/classify', $('#inputHadis').serialize(), function(data) {
-            $('#hasilKlasifikasi').val(JSON.stringify(data));
+            // $('#hasilKlasifikasi').val(JSON.stringify(data));
+            var obj = JSON.parse(data);
+            $('#hasilKlasifikasi').val(obj.klasifikasiM + ' tentang ' + obj.klasifikasiK);
           });
       });
   </script>
