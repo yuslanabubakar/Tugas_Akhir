@@ -45,7 +45,7 @@ for i in range(num_folds): #K-Cross Validation
     #fc.plotIGW(IGW)
     #
     #get threshold for each IGW
-    value = 0.80
+    value = 0.65
     igw = fc.thresholdIGW(IGW,value)
     #
     ###for i in ig:
@@ -64,7 +64,7 @@ for i in range(num_folds): #K-Cross Validation
     input_p = len(TFIDF[0][1])
     hidden_p = 10
     output_p = 5
-    lr = 0.08
+    lr = 0.01
     epoch = 3000
     mseStandar = 0.01
     ###i_param = [input_p,hidden_p,output_p,lr,epoch,mseStandar]

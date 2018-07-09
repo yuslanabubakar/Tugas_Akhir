@@ -31,6 +31,7 @@ anugerahkanlah
 arab
 arafah
 asalnya
+ashar
 atap
 atapnya
 atasnya
@@ -59,6 +60,7 @@ bapakku
 bapakmu
 bapaknya
 barangkali
+barangsiapa
 barisan
 basah
 basmalah
@@ -110,6 +112,7 @@ berbulu
 berdasarkan
 berdatanganlah
 berdebat
+berdiri
 berdoa
 berdosa
 berdusta
@@ -175,6 +178,7 @@ berpisah
 berpostur
 berpuasa
 berputar
+bersabda
 bersaksi
 bersamaku
 bersamanya
@@ -204,6 +208,7 @@ berterima
 berukir
 beruntung
 berwarna
+berwudlu
 berwudlulah
 besi
 betapa
@@ -437,6 +442,7 @@ domba
 dongkol
 dosa
 dosa-dosanya
+duduk
 duduknya
 dunia
 durinya
@@ -481,6 +487,7 @@ hadapi
 hadapkan
 hadats
 hadir
+hadits
 haditsnya
 hafal
 haid
@@ -507,6 +514,7 @@ hati
 hatinya
 helai
 hembusan
+hendaklah
 hendaknya
 heran
 hewan
@@ -556,6 +564,8 @@ jagalah
 jahannam
 jalan-nya
 jamrah
+jangan
+janganlah
 jarak
 jaraknya
 jari-jari
@@ -592,6 +602,7 @@ kamarku
 kamarnya
 kambing
 kampung
+kanannya
 kandang
 kantong
 kantuk
@@ -601,6 +612,7 @@ karunia-ku
 kasih
 kasur
 katakanlah
+kaum
 kaumku
 kaummu
 kaumnya
@@ -612,6 +624,7 @@ keberadaan
 keberkahan
 kebodohan
 kebosanan
+kecuali
 kediaman
 keenam
 kehausan
@@ -656,6 +669,7 @@ kentut
 kenyang
 kepada-ku
 kepada-mu
+kepadaku
 kepadamu
 kepala
 kepalaku
@@ -717,6 +731,7 @@ kuserahkan
 kutukan
 lafadz
 lajang
+laki-laki
 laknat
 lakukanlah
 lalang
@@ -767,6 +782,7 @@ makkah
 makmum
 malaikat
 malaikat-malaikat-nya
+malam
 malam-malam
 malammu
 malas
@@ -775,15 +791,18 @@ mandi
 mani
 manisnya
 mantel
+manusia
 maqdis
 maruf
 masanya
+masjid
 masjidnya
 matahari
 maukah
 melahirkan
 melaju
 melaknat
+melaksanakan
 melaksanakannya
 melakukannya
 melalaikannya
@@ -829,6 +848,7 @@ membangunkan
 membasuh
 membasuhnya
 membatasinya
+membawa
 membawakan
 membawaku
 membayarnya
@@ -863,6 +883,7 @@ memerdekakan
 memerintahkan
 memerintahkanmu
 memilih
+memiliki
 memimpin
 memindahkan
 meminjamkan
@@ -910,6 +931,7 @@ mencelakakan
 mencelup
 menceraikannya
 mencerca
+menceritakan
 menceritakannya
 menciduk
 mencintai
@@ -930,6 +952,7 @@ mendekat
 mendekati
 mendekatkan
 mendekatlah
+mendengar
 mendengarnya
 mendengki
 mendengkur
@@ -999,6 +1022,7 @@ menggeser
 menggosok
 menggosoknya
 menggunakannya
+menghadap
 menghadapkan
 menghadaplah
 menghadapnya
@@ -1180,6 +1204,7 @@ nampak
 nashara
 nasihat
 negeri
+neraka
 niat
 niatnya
 nifaq
@@ -1187,6 +1212,7 @@ nikmat
 nikmat-nikmat
 niscaya
 non-arab
+orang-orang
 orangnya
 orangtua
 pacuan
@@ -1194,6 +1220,7 @@ pagi
 paha
 pahala
 paham
+pakaian
 pakaiannnya
 pakaiannya
 pamannya
@@ -1271,6 +1298,7 @@ perbuatannya
 perdagangan
 perdebatan
 perempuan
+pergi
 pergilah
 pergunakanlah
 perhatikan
@@ -1484,6 +1512,7 @@ sesuatupun
 sesudahku
 sesuka
 sesukanya
+sesungguhnya
 setan
 setara
 setelahku
@@ -1494,6 +1523,7 @@ setuju
 seukuran
 shaffaat
 shahabat
+shalat
 shalatku
 shalatlah
 shalatnya
@@ -1529,6 +1559,7 @@ suara
 subuh
 suci
 sucinya
+sujud
 sujudnya
 suka
 sukai
@@ -1538,6 +1569,7 @@ sulaiman
 sulit
 sumur
 sungai
+sungguh
 sunnat
 surah
 surat
@@ -1562,6 +1594,7 @@ tanah
 tanahnya
 tanda-tandanya
 tanganku
+tangannya
 tangga
 tanggung
 tanyalah
@@ -1639,6 +1672,7 @@ thawaflah
 tiang
 tiangnya
 tiap-tiap
+tidur
 tidurku
 tidurlah
 tidurnya
