@@ -45,7 +45,7 @@ for i in range(num_folds): #K-Cross Validation
     #fc.plotIGW(IGW)
     #
     #get threshold for each IGW
-    value = 0.65
+    value = 0.60
     igw = fc.thresholdIGW(IGW,value)
     #
     ###for i in ig:
