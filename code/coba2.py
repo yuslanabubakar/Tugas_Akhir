@@ -20,7 +20,7 @@ matriksTarget = [[0,0,1],
                  [1,1,1]]
 np.savetxt('matriksTargetMulti.txt',matriksTarget)
 print 'Open File...'
-wb = load_workbook('dataMulti.xlsx')
+wb = load_workbook('data.xlsx')
 sheet = wb.active
 dataSet = fc.getData(sheet)
 
@@ -43,7 +43,7 @@ for i in range(num_folds): #K-Cross Validation
     igW = fc.informationGain(docEachClass,training,piW,dataPre)
     
     #get words if igW value > threshold
-    igWThreshold = [x[0] for x in igW if x[1] > 0.75]
+    igWThreshold = [x[0] for x in igW if x[1] > 0.60]
 #    igWThreshold = []
 #    for i in ig:
 #        igWThreshold.append(i[0])
